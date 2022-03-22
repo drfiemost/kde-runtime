@@ -59,6 +59,14 @@ set_package_properties(LibGcrypt PROPERTIES DESCRIPTION "Libgcrypt is a general 
                        TYPE REQUIRED
                        PURPOSE "kwalletd needs libgcrypt to perform PBKDF2-SHA512 hashing"
                       )
+
+macro_optional_find_package(KdepimLibs)
+set_package_properties(KdepimLibs PROPERTIES DESCRIPTION "The KDE PIM Libraries"
+                       URL "http://www.kde.org"
+                       TYPE OPTIONAL
+                       PURPOSE "Required to build Drkonqi"
+                      )
+
 # Build options
 option(KDERUNTIME_BUILD_NEPOMUK "Build the Nepomuk KCM and kioslaves" FALSE)
 
@@ -109,7 +117,9 @@ add_subdirectory(kimgio)
 macro_optional_add_subdirectory(renamedlgplugins)
 
 # UI Helper applications
-macro_optional_add_subdirectory(drkonqi)
+if ( KdepimLibs_FOUND )
+    add_subdirectory(drkonqi)
+endif ( KdepimLibs_FOUND )
 add_subdirectory(kcmshell)
 add_subdirectory(kdebugdialog)
 macro_optional_add_subdirectory(khelpcenter)
