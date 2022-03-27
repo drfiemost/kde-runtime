@@ -40,19 +40,6 @@ bluedevil-network-panu=solid|bluetooth
 bluedevil-sendfile=solid|bluetooth
 bluedevil-wizard=solid|bluetooth
 
-#KDE Platform (Nepomuk)
-nepomukbackup=nepomuk|backupservice
-nepomukcleaner=nepomuk|general
-nepomukcontroller=nepomuk|controller
-nepomukindexer=nepomuk|fileindexer
-nepomukfileindexer=nepomuk|fileindexer
-nepomukfilewatch=nepomuk|filewatch
-nepomukstorage=nepomuk|storage
-nepomukserver=nepomuk|general
-nepomukservicestub=nepomuk|general
-nepomukshell=nepomukshell|Misc
-metadataextractor=nepomuk|general
-
 #KDE Plasma Desktop (Plasma & KRunner)
 plasma-desktop=plasma4|general
 plasma-mid=plasma4|general

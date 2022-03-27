@@ -27,12 +27,6 @@ set_package_properties(KDeclarative PROPERTIES DESCRIPTION "KDE Declarative (QML
                        PURPOSE "Required by corebindingsplugin (org.kde.plasma.core)"
                       )
 
-macro_optional_find_package(NepomukCore)
-set_package_properties(NepomukCore PROPERTIES DESCRIPTION "Nepomuk Core Libraries"
-                       URL "https://projects.kde.org/nepomuk-core"
-                       TYPE OPTIONAL
-                      )
-
 macro_optional_find_package(SLP)
 set_package_properties(SLP PROPERTIES DESCRIPTION "SLP (Service Location Protocol) implementation"
                        URL "http://www.openslp.org/"
@@ -67,9 +61,6 @@ set_package_properties(KdepimLibs PROPERTIES DESCRIPTION "The KDE PIM Libraries"
                        PURPOSE "Required to build Drkonqi"
                       )
 
-# Build options
-option(KDERUNTIME_BUILD_NEPOMUK "Build the Nepomuk KCM and kioslaves" FALSE)
-
 check_include_files(sys/wait.h HAVE_SYS_WAIT_H)
 check_include_files(sys/time.h HAVE_SYS_TIME_H)
 
@@ -101,10 +92,6 @@ if ( UNIX )
    add_subdirectory(solid-device-automounter)
    add_subdirectory(solid-networkstatus)
 endif ( UNIX )
-
-if(NepomukCore_FOUND AND KDERUNTIME_BUILD_NEPOMUK)
-    macro_optional_add_subdirectory(nepomuk)
-endif()
 
 # Plugins/components required for basic utility
 if ( NOT WINCE )
