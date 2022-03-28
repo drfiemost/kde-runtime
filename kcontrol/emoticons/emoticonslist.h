@@ -65,7 +65,9 @@ private slots:
     void addEmoticon();
     void editEmoticon();
     void newTheme();
+#ifdef ENABLE_KNEWSTUFF3
     void getNewStuff();
+#endif
     void updateButton();
     void somethingChanged();
 private:

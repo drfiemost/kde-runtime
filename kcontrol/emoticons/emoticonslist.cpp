@@ -35,7 +35,9 @@
 #include <kdecore_export.h>
 #include <kio/netaccess.h>
 #include <kpluginfactory.h>
+#ifdef ENABLE_KNEWSTUFF3
 #include <KNS3/DownloadDialog>
+#endif
 
 EditDialog::EditDialog(QWidget *parent, const QString &name)
         : KDialog(parent)
@@ -113,7 +115,9 @@ EmoticonList::EmoticonList(QWidget *parent, const QVariantList &args)
     btEdit->setIcon(KIcon("edit-rename"));
     btRemoveEmoticon->setIcon(KIcon("edit-delete"));
     btNew->setIcon(KIcon("document-new"));
+#ifdef ENABLE_KNEWSTUFF3
     btGetNew->setIcon(KIcon("get-hot-new-stuff"));
+#endif
     btInstall->setIcon(KIcon("document-import"));
     btRemoveTheme->setIcon(KIcon("edit-delete"));
 
@@ -122,7 +126,9 @@ EmoticonList::EmoticonList(QWidget *parent, const QVariantList &args)
     connect(btRemoveTheme, SIGNAL(clicked()), this, SLOT(btRemoveThemeClicked()));
     connect(btInstall, SIGNAL(clicked()), this, SLOT(installEmoticonTheme()));
     connect(btNew, SIGNAL(clicked()), this, SLOT(newTheme()));
+#ifdef ENABLE_KNEWSTUFF3
     connect(btGetNew, SIGNAL(clicked()), this, SLOT(getNewStuff()));
+#endif
     connect(cbStrict, SIGNAL(clicked()), this, SLOT(somethingChanged()));
 
     connect(btAdd, SIGNAL(clicked()), this, SLOT(addEmoticon()));
@@ -420,7 +426,7 @@ void EmoticonList::loadTheme(const QString &name)
         }
     }
 }
-
+#ifdef ENABLE_KNEWSTUFF3
 void EmoticonList::getNewStuff()
 {
     KNS3::DownloadDialog dialog("emoticons.knsrc", this);
@@ -444,7 +450,7 @@ void EmoticonList::getNewStuff()
         }
     }
 }
-
+#endif
 QString EmoticonList::previewEmoticon(const KEmoticonsTheme &theme)
 {
         QString path = theme.tokenize(":)")[0].picPath;
