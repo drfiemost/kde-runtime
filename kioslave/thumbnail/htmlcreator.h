@@ -27,7 +27,7 @@
 
 #include <kio/thumbcreator.h>
 
-class KWebPage;
+class QWebPage;
 
 class HTMLCreator : public QObject, public ThumbCreator
 {
@@ -46,7 +46,7 @@ private Q_SLOTS:
 
 private:
     bool m_loadedOk;
-    KWebPage *m_page;
+    QWebPage *m_page;
     QEventLoop m_eventLoop;
 };
 

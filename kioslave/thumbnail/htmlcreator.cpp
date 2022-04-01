@@ -52,7 +52,7 @@ bool HTMLCreator::create(const QString &path, int width, int height, QImage &img
 {
     if (!m_page)
     {
-        m_page = new KWebPage;
+        m_page = new QWebPage;
         connect(m_page, SIGNAL(loadFinished(bool)), SLOT(slotFinished(bool)));
         m_page->settings()->setAttribute(QWebSettings::JavascriptEnabled, false);
         m_page->settings()->setAttribute(QWebSettings::JavaEnabled, false);
