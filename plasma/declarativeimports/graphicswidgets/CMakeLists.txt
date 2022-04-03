@@ -19,3 +19,7 @@ target_link_libraries(graphicswidgetsbindingsplugin ${KDE4_PLASMA_LIBS} ${QT_QTS
 
 install(TARGETS graphicswidgetsbindingsplugin DESTINATION ${IMPORTS_INSTALL_DIR}/org/kde/plasma/graphicswidgets)
 install(FILES qmldir DESTINATION ${IMPORTS_INSTALL_DIR}/org/kde/plasma/graphicswidgets)
+
+if(NOT QT_QTWEBKIT_FOUND)
+    add_definitions(-DPLASMA_NO_KDEWEBKIT)
+endif(NOT QT_QTWEBKIT_FOUND)
