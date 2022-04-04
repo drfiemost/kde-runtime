@@ -19,7 +19,7 @@
 
 #include "qmenuitem.h"
 
-QMenuItem::QMenuItem(QObject *parent)
+QMenuProxyItem::QMenuProxyItem(QObject *parent)
     : QAction(parent)
 {
     connect(this, SIGNAL(triggered(bool)), this, SIGNAL(clicked()));

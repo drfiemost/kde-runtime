@@ -99,7 +99,7 @@ void PlasmaComponentsPlugin::registerTypes(const char *uri)
     const QString target = KDeclarative::componentsTarget();
     if (target == KDeclarative::defaultComponentsTarget()) {
         qmlRegisterType<QMenuProxy>(uri, 0, 1, "Menu");
-        qmlRegisterType<QMenuItem>(uri, 0, 1, "MenuItem");
+        qmlRegisterType<QMenuProxyItem>(uri, 0, 1, "MenuItem");
     } else {
         qmlRegisterType<FullScreenSheet>(uri, 0, 1, "Sheet");
     }

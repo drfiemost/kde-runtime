@@ -25,6 +25,7 @@
 #include <QGraphicsObject>
 #include <QGraphicsView>
 #include <QDeclarativeItem>
+#include <QMenu>
 
 #include "plasmacomponentsplugin.h"
 QMenuProxy::QMenuProxy (QObject *parent)
@@ -42,9 +43,9 @@ QMenuProxy::~QMenuProxy()
     delete m_menu;
 }
 
-QDeclarativeListProperty<QMenuItem> QMenuProxy::content()
+QDeclarativeListProperty<QMenuProxyItem> QMenuProxy::content()
 {
-    return QDeclarativeListProperty<QMenuItem>(this, m_items);
+    return QDeclarativeListProperty<QMenuProxyItem>(this, m_items);
 }
 
 int QMenuProxy::actionCount() const
@@ -52,7 +53,7 @@ int QMenuProxy::actionCount() const
     return m_items.count();
 }
 
-QMenuItem *QMenuProxy::action(int index) const
+QMenuProxyItem *QMenuProxy::action(int index) const
 {
     return m_items.at(index);
 }
@@ -84,7 +85,7 @@ void QMenuProxy::setVisualParent(QObject *parent)
     if (action) {
         action->setMenu(m_menu);
         m_menu->clear();
-        foreach(QMenuItem* item, m_items) {
+        foreach(QMenuProxyItem* item, m_items) {
             m_menu->addAction(item);
         }
         m_menu->updateGeometry();
@@ -99,7 +100,7 @@ bool QMenuProxy::event(QEvent *event)
     switch (event->type()) {
     case QEvent::ChildAdded: {
         QChildEvent *ce = static_cast<QChildEvent *>(event);
-        QMenuItem *mi = qobject_cast<QMenuItem *>(ce->child());
+        QMenuProxyItem *mi = qobject_cast<QMenuProxyItem *>(ce->child());
         //FIXME: linear complexity here
         if (mi && !m_items.contains(mi)) {
             m_menu->addAction(mi);
@@ -110,7 +111,7 @@ bool QMenuProxy::event(QEvent *event)
 
     case QEvent::ChildRemoved: {
         QChildEvent *ce = static_cast<QChildEvent *>(event);
-        QMenuItem *mi = qobject_cast<QMenuItem *>(ce->child());
+        QMenuProxyItem *mi = qobject_cast<QMenuProxyItem *>(ce->child());
 
         //FIXME: linear complexity here
         if (mi) {
@@ -135,13 +136,13 @@ void QMenuProxy::clearMenuItems()
 
 void QMenuProxy::addMenuItem(const QString &text)
 {
-    QMenuItem *item = new QMenuItem(this);
+    QMenuProxyItem *item = new QMenuProxyItem(this);
     item->setText(text);
     m_menu->addAction(item);
     m_items << item;
 }
 
-void QMenuProxy::addMenuItem(QMenuItem *item)
+void QMenuProxy::addMenuItem(QMenuProxyItem *item)
 {
     m_menu->addAction(item);
     m_items << item;
@@ -149,7 +150,7 @@ void QMenuProxy::addMenuItem(QMenuItem *item)
 
 void QMenuProxy::itemTriggered(QAction *action)
 {
-    QMenuItem *item = qobject_cast<QMenuItem *>(action);
+    QMenuProxyItem *item = qobject_cast<QMenuProxyItem *>(action);
     if (item) {
         emit triggered(item);
         int index = m_items.indexOf(item);
@@ -162,7 +163,7 @@ void QMenuProxy::itemTriggered(QAction *action)
 void QMenuProxy::open(int x, int y)
 {
     m_menu->clear();
-    foreach(QMenuItem* item, m_items) {
+    foreach(QMenuProxyItem* item, m_items) {
         m_menu->addAction (item);
     }
 
@@ -225,7 +226,7 @@ void QMenuProxy::open()
 {
     m_menu->clear();
 
-    foreach(QMenuItem* item, m_items) {
+    foreach(QMenuProxyItem* item, m_items) {
         m_menu->addAction (item);
     }
     m_menu->updateGeometry();

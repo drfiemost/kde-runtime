@@ -23,7 +23,7 @@
 #include <QAction>
 #include <QObject>
 
-class QMenuItem : public QAction
+class QMenuProxyItem : public QAction
 {
     Q_OBJECT
 
@@ -38,7 +38,7 @@ class QMenuItem : public QAction
     Q_PROPERTY(bool separator READ isSeparator WRITE setSeparator)
 
 public:
-    QMenuItem(QObject *parent = 0);
+    QMenuProxyItem(QObject *parent = 0);
 
 Q_SIGNALS:
     void clicked();

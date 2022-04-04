@@ -21,7 +21,6 @@
 #define QMENU_PROXY_H
 
 #include <QObject>
-#include <QMenu>
 #include <QDeclarativeListProperty>
 #include "qmenuitem.h"
 #include "enums.h"
@@ -32,7 +31,7 @@ class QMenuProxy : public QObject
 {
     Q_OBJECT
 
-    Q_PROPERTY(QDeclarativeListProperty<QMenuItem> content READ content CONSTANT)
+    Q_PROPERTY(QDeclarativeListProperty<QMenuProxyItem> content READ content CONSTANT)
     Q_CLASSINFO("DefaultProperty", "content")
 
     /**
@@ -45,9 +44,9 @@ public:
     QMenuProxy(QObject *parent = 0);
     ~QMenuProxy();
 
-    QDeclarativeListProperty<QMenuItem> content();
+    QDeclarativeListProperty<QMenuProxyItem> content();
     int actionCount() const;
-    QMenuItem *action(int) const;
+    QMenuProxyItem *action(int) const;
     DialogStatus::Status status() const;
 
     QObject *visualParent() const;
@@ -58,7 +57,7 @@ public:
     Q_INVOKABLE void close();
     Q_INVOKABLE void clearMenuItems();
     Q_INVOKABLE void addMenuItem(const QString &text);
-    Q_INVOKABLE void addMenuItem(QMenuItem *item);
+    Q_INVOKABLE void addMenuItem(QMenuProxyItem *item);
 
 protected:
     bool event(QEvent *event);
@@ -66,7 +65,7 @@ protected:
 Q_SIGNALS:
     void statusChanged();
     void visualParentChanged();
-    void triggered(QMenuItem *item);
+    void triggered(QMenuProxyItem *item);
     void triggeredIndex(int index);
 
 private Q_SLOTS:
@@ -74,7 +73,7 @@ private Q_SLOTS:
     void markAsClosed();
 
 private:
-    QList<QMenuItem*> m_items;
+    QList<QMenuProxyItem*> m_items;
     QMenu *m_menu;
     DialogStatus::Status m_status;
     QWeakPointer<QObject> m_visualParent;
