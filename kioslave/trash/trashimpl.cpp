@@ -41,6 +41,7 @@
 #include <kconfiggroup.h>
 #include <kmountpoint.h>
 
+#include <QCoreApplication>
 #include <QEventLoop>
 #include <QFile>
 #include <QDir>
@@ -914,6 +915,14 @@ static int idForDevice(const Solid::Device& device)
 }
 #endif
 
+void TrashImpl::refreshDevices() const
+{
+    // this is needed because Solid's fstab backend uses QSocketNotifier
+    // to get notifications about changes to mtab
+    // otherwise we risk getting old device list
+    qApp->processEvents(QEventLoop::ExcludeUserInputEvents);
+}
+
 int TrashImpl::findTrashDirectory( const QString& origPath )
 {
     kDebug() << origPath;
@@ -955,6 +964,7 @@ int TrashImpl::findTrashDirectory( const QString& origPath )
 #ifdef Q_OS_MAC
     id = idForMountPoint(mountPoint);
 #else
+    refreshDevices();
     const QString query = QString::fromLatin1("[StorageAccess.accessible == true AND StorageAccess.filePath == '")+mountPoint+QString::fromLatin1("']");
     //kDebug() << "doing solid query:" << query;
     const QList<Solid::Device> lst = Solid::Device::listFromQuery(query);
@@ -981,6 +991,8 @@ int TrashImpl::findTrashDirectory( const QString& origPath )
 
 void TrashImpl::scanTrashDirectories() const
 {
+    refreshDevices();
+
     const QList<Solid::Device> lst = Solid::Device::listFromQuery(QString::fromLatin1("StorageAccess.accessible == true"));
     for ( QList<Solid::Device>::ConstIterator it = lst.begin() ; it != lst.end() ; ++it ) {
         QString topdir = (*it).as<Solid::StorageAccess>()->filePath();
@@ -1250,11 +1262,6 @@ bool TrashImpl::adaptTrashSize( const QString& origPath, int trashId )
         TrashSizeCache trashSize( trashPath );
         DiscSpaceUtil util(trashPath + QString::fromLatin1("/files/"));
         if ( util.usage( trashSize.calculateSize() + additionalSize ) >= percent ) {
-            if ( actionType == 0 ) { // warn the user only
-                m_lastErrorCode = KIO::ERR_SLAVE_DEFINED;
-                m_lastErrorMessage = i18n( "The trash has reached its maximum size!\nCleanup the trash manually." );
-                return false;
-            } else {
                 // before we start to remove any files from the trash,
                 // check whether the new file will fit into the trash
                 // at all...
@@ -1267,8 +1274,12 @@ bool TrashImpl::adaptTrashSize( const QString& origPath, int trashId )
                     return false;
                 }
 
-                // the size of the to be trashed file is ok, so lets start removing
-                // some other files from the trash
+            if ( actionType == 0 ) { // warn the user only
+                m_lastErrorCode = KIO::ERR_SLAVE_DEFINED;
+                m_lastErrorMessage = i18n( "The trash has reached its maximum size!\nCleanup the trash manually." );
+                return false;
+            } else {
+                // lets start removing some other files from the trash
 
                 QDir dir(trashPath + QString::fromLatin1("/files"));
                 QFileInfoList infoList;

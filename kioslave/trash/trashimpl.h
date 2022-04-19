@@ -134,6 +134,8 @@ private:
     QString infoPath( int trashId, const QString& fileId ) const;
     QString filesPath( int trashId, const QString& fileId ) const;
 
+    void refreshDevices() const;
+
     /// Find the trash dir to use for a given file to delete, based on original path
     int findTrashDirectory( const QString& origPath );
 
