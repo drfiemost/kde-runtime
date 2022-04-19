@@ -390,7 +390,8 @@ bool TrashProtocol::createUDSEntry( const QString& physicalPath, const QString& 
     QByteArray physicalPath_c = QFile::encodeName( physicalPath );
     KDE_struct_stat buff;
     if ( KDE_lstat( physicalPath_c, &buff ) == -1 ) {
-        kWarning() << "couldn't stat " << physicalPath ;
+        kWarning() << "couldn't stat " << physicalPath << ", relevant trashinfo file will be removed";
+        impl.deleteInfo(info.trashId, info.fileId);
         return false;
     }
     if (S_ISLNK(buff.st_mode)) {

@@ -633,6 +633,30 @@ void TestTrash::tryRenameInsideTrash()
     QVERIFY( KIO::NetAccess::lastError() == KIO::ERR_CANNOT_RENAME );
 }
 
+void TestTrash::testRemoveStaleInfofile()
+{
+    const QString fileName = QStringLiteral("disappearingFileInTrash");
+    const QString filePath = homeTmpDir() + fileName;
+    createTestFile(filePath);
+    trashFile(filePath, fileName);
+
+    const QString pathInTrash = m_trashDir + QLatin1String("/files/") + QLatin1String("disappearingFileInTrash");
+    // remove the file without using KIO
+    QVERIFY(QFile::remove(pathInTrash));
+
+    // .trashinfo file still exists
+    const QString infoPath = m_trashDir + QLatin1String("/info/disappearingFileInTrash.trashinfo");
+    QVERIFY(QFile(infoPath).exists());
+
+    KIO::ListJob *job = KIO::listDir(QUrl(QStringLiteral("trash:/")), KIO::HideProgressInfo);
+    connect(job, &KIO::ListJob::entries, this, &TestTrash::slotEntries);
+    QVERIFY(job->exec());
+
+    // during the list job, kio_trash should have deleted the .trashinfo file since it
+    // references a trashed file that doesn't exist any more
+    QVERIFY(!QFile(infoPath).exists());
+}
+
 void TestTrash::delRootFile()
 {
     // test deleting a trashed file
@@ -926,6 +950,18 @@ void TestTrash::moveSymlinkFromTrash()
     const QString destPath = otherTmpDir() + "symlinkFromHome_restored";
     moveFromTrash( "symlinkFromHome", destPath );
     QVERIFY( QFileInfo( destPath ).isSymLink() );
+}
+
+void TestTrash::testMoveNonExistingFile()
+{
+    const QUrl dest = QUrl::fromLocalFile(homeTmpDir() + QLatin1String("DoesNotExist"));
+    KIO::Job *job =
+        KIO::file_move(QUrl(QStringLiteral("trash:/0-DoesNotExist")), dest, -1, KIO::HideProgressInfo);
+
+    QVERIFY(!job->exec());
+    QCOMPARE(job->error(), KIO::ERR_DOES_NOT_EXIST);
+    QCOMPARE(job->errorString(), QStringLiteral("The file or folder trash:/DoesNotExist does not exist."));
+
 }
 
 void TestTrash::getFile()

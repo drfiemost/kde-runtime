@@ -63,6 +63,7 @@ private Q_SLOTS:
     void statDirectoryInRoot();
     void statSymlinkInRoot();
     void statFileInDirectory();
+    void testRemoveStaleInfofile();
 
     void copyFileFromTrash();
     void copyFileInDirectoryFromTrash();
@@ -73,6 +74,7 @@ private Q_SLOTS:
     void moveFileInDirectoryFromTrash();
     void moveDirectoryFromTrash();
     void moveSymlinkFromTrash();
+    void testMoveNonExistingFile();
 
     void listRootDir();
     void listRecursiveRootDir();
