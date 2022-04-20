@@ -235,6 +235,7 @@ bool KGlobalAccelImpl::x11KeyPress( const XEvent *pEvent )
 				case XK_KP_Add:
 				case XK_KP_Subtract:
 				case XK_KP_Divide:
+				case XK_KP_Enter:
 					break;
 
 				default:
