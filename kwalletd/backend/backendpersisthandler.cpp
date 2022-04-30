@@ -561,9 +561,9 @@ int GpgPersistHandler::write(Backend* wb, KSaveFile& sf, QByteArray& version, WI
     }
 
     char buffer[4096];
-    ssize_t bytes =0;
+    ssize_t bytes;
     encryptedData.seek(0, SEEK_SET);
-    while (bytes = encryptedData.read(buffer, sizeof(buffer)/sizeof(buffer[0]))){
+    while ((bytes = encryptedData.read(buffer, sizeof(buffer)/sizeof(buffer[0]))) != 0){
         if (sf.write(buffer, bytes) != bytes){
             KMessageBox::errorWId( w, i18n("<qt>File handling error while attempting to save the wallet <b>%1</b>. Error was <b>%2</b>. Please fix your system configuration, then try again!</qt>", Qt::escape(wb->_name), sf.errorString()));
             sf.abort();
@@ -588,8 +588,8 @@ int GpgPersistHandler::read(Backend* wb, QFile& sf, WId w)
     // the remainder of the file is GPG encrypted. Let's decrypt it
     GpgME::Data encryptedData;
     char buffer[4096];
-    ssize_t bytes = 0;
-    while (bytes = sf.read(buffer, sizeof(buffer)/sizeof(buffer[0]))){
+    ssize_t bytes;
+    while ((bytes = sf.read(buffer, sizeof(buffer)/sizeof(buffer[0]))) != 0) {
         encryptedData.write(buffer, bytes);
     }
 
@@ -619,7 +619,7 @@ int GpgPersistHandler::read(Backend* wb, QFile& sf, WId w)
 
     decryptedData.seek(0, SEEK_SET);
     QByteArray dataBuffer;
-    while (bytes = decryptedData.read(buffer, sizeof(buffer)/sizeof(buffer[0]))){
+    while ((bytes = decryptedData.read(buffer, sizeof(buffer)/sizeof(buffer[0]))) != 0){
         dataBuffer.append(buffer, bytes);
     }
 
