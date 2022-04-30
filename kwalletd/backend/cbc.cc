@@ -86,7 +86,7 @@ void CipherBlockChain::initRegister() {
 int CipherBlockChain::encrypt(void *block, int len)
 {
     if (_cipher && !_reader) {
-        int rc;
+        int rc = -1;
 
         _writer |= 1;
 
