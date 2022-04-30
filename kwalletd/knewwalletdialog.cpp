@@ -87,7 +87,9 @@ int KNewWalletDialogIntro::nextId() const
     }
 }
 
-KNewWalletDialogGpg::KNewWalletDialogGpg(const QString& appName, const QString& walletName, QWidget* parent): 
+KNewWalletDialogGpg::KNewWalletDialogGpg([[maybe_unused]] const QString& appName,
+                                         [[maybe_unused]] const QString& walletName,
+                                         QWidget* parent):
     QWizardPage(parent), _alreadyInitialized(false), _complete(false)
 {
     _ui.setupUi(this);
@@ -137,7 +139,6 @@ void KNewWalletDialogGpg::initializePage()
     _ctx->setKeyListMode(GpgME::Local);
 
     std::vector< GpgME::Key > keys;
-    int row =0;
     err = _ctx->startKeyListing();
     while (!err) {
         GpgME::Key k = _ctx->nextKey(err);

@@ -639,7 +639,6 @@ int GpgPersistHandler::read(Backend* wb, QFile& sf, WId w)
 
     ctx->setKeyListMode(GPGME_KEYLIST_MODE_LOCAL);
     std::vector< GpgME::Key > keys;
-    int row =0;
     err = ctx->startKeyListing();
     while (!err) {
         GpgME::Key k = ctx->nextKey(err);

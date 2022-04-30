@@ -167,7 +167,6 @@ public:
             } else {
 
             ctx->setKeyListMode(GPGME_KEYLIST_MODE_LOCAL);
-            int row =0;
             err = ctx->startKeyListing();
             while (!err) {
                 GpgME::Key k = ctx->nextKey(err);
