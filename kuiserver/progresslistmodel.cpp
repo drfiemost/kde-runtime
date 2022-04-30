@@ -167,7 +167,7 @@ QModelIndex ProgressListModel::index(int row, int column, const QModelIndex &par
     if (row >= m_jobViews.count() || column > 0)
         return QModelIndex();
 
-        return createIndex(row, column);
+    return createIndex(row, column);
 }
 
 QModelIndex ProgressListModel::indexForJob(JobView *jobView) const
