@@ -12,8 +12,7 @@ INCLUDE_DIRECTORIES(
         ${KDE4_INCLUDES}
 )
 
-qt4_automoc(${graphicslayoutsbindings_SRCS})
-
+set(CMAKE_AUTOMOC ON)
 
 add_library(graphicslayoutsbindingsplugin SHARED ${graphicslayoutsbindings_SRCS})
 target_link_libraries(graphicslayoutsbindingsplugin ${QT_QTCORE_LIBRARY} ${QT_QTGUI_LIBRARY} ${QT_QTSCRIPT_LIBRARY} ${QT_QTDECLARATIVE_LIBRARY})

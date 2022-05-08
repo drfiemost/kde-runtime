@@ -19,8 +19,7 @@ INCLUDE_DIRECTORIES(
         ${KDE4_INCLUDES}
 )
 
-qt4_automoc(${qtextracomponents_SRCS})
-
+set(CMAKE_AUTOMOC ON)
 
 add_library(qtextracomponentsplugin SHARED ${qtextracomponents_SRCS})
 target_link_libraries(qtextracomponentsplugin ${KDE4_KDEUI_LIBS} ${QT_QTCORE_LIBRARY} ${QT_QTGUI_LIBRARY} ${QT_QTDECLARATIVE_LIBRARY})

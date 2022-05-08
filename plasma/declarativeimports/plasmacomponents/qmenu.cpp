@@ -303,5 +303,5 @@ void QMenuProxy::markAsClosed()
     emit statusChanged();
 }
 
-#include "qmenu.moc"
+#include "moc_qmenu.cpp"
 

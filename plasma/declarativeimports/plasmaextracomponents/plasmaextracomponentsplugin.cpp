@@ -44,5 +44,5 @@ void PlasmaExtraComponentsPlugin::registerTypes(const char *uri)
 }
 
 
-#include "plasmaextracomponentsplugin.moc"
+#include "moc_plasmaextracomponentsplugin.cpp"
 

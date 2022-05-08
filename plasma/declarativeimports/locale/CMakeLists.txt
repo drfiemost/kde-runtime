@@ -14,8 +14,7 @@ INCLUDE_DIRECTORIES(
         ${KDE4_INCLUDES}
 )
 
-qt4_automoc(${localebindings_SRCS})
-
+set(CMAKE_AUTOMOC ON)
 
 kde4_add_library(localebindingsplugin SHARED ${localebindings_SRCS})
 

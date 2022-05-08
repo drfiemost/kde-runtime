@@ -5,7 +5,7 @@ set(dirmodel_SRCS
     dirmodelplugin.cpp
     )
 
-qt4_automoc(${dirmodel_SRCS})
+set(CMAKE_AUTOMOC ON)
 
 kde4_add_library(dirmodelplugin SHARED ${dirmodel_SRCS})
 target_link_libraries(dirmodelplugin

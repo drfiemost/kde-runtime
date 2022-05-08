@@ -448,5 +448,5 @@ void DialogProxy::setAttribute(int attribute, bool on)
     }
 }
 
-#include "dialog.moc"
+#include "moc_dialog.cpp"
 

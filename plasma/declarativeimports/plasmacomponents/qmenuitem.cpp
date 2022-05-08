@@ -25,5 +25,5 @@ QMenuProxyItem::QMenuProxyItem(QObject *parent)
     connect(this, SIGNAL(triggered(bool)), this, SIGNAL(clicked()));
 }
 
-#include "qmenuitem.moc"
+#include "moc_qmenuitem.cpp"
 

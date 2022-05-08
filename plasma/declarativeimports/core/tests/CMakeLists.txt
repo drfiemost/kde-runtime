@@ -24,7 +24,8 @@ set(runnermodeltest_SRCS
     ../runnermodel.cpp
     )
 
-qt4_automoc(${runnermodeltest_SRCS})
+set(CMAKE_AUTOMOC ON)
+
 #kde4_add_library(datamodelsplugin SHARED ${datamodels_SRCS})
 kde4_add_executable(runnermodeltest ${runnermodeltest_SRCS})
 target_link_libraries(runnermodeltest ${QT_QTTEST_LIBRARY} ${KDE4_PLASMA_LIBS})

@@ -18,8 +18,7 @@ INCLUDE_DIRECTORIES(
         ${KDE4_INCLUDES}
 )
 
-qt4_automoc(${plasmacomponents_SRCS})
-
+set(CMAKE_AUTOMOC ON)
 
 add_library(plasmacomponentsplugin SHARED ${plasmacomponents_SRCS})
 target_link_libraries(plasmacomponentsplugin ${QT_QTCORE_LIBRARY} ${QT_QTDECLARATIVE_LIBRARY} ${QT_QTGUI_LIBRARY} ${KDE4_KDEUI_LIBRARY} ${KDECLARATIVE_LIBRARIES} ${KDE4_PLASMA_LIBS})
