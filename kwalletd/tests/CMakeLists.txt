@@ -23,7 +23,7 @@ if (QGPGME_FOUND)
 endif(QGPGME_FOUND)
 
 kde4_add_executable(kwalletwizardtest TEST ${kwalletwizardtest_SRCS})
-target_link_libraries(kwalletwizardtest ${KDE4_KDECORE_LIBS} ${KDE4_KDEUI_LIBS} ${QT_QTGUI_LIBRARY})
+target_link_libraries(kwalletwizardtest ${KDE4_KDECORE_LIBS} ${KDE4_KDEUI_LIBS} Qt4::QtGui)
 if (QGPGME_FOUND)
     target_link_libraries(kwalletwizardtest ${QGPGME_LIBRARIES})
 endif(QGPGME_FOUND)

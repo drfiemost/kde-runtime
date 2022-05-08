@@ -14,7 +14,7 @@ INCLUDE_DIRECTORIES(
 set(CMAKE_AUTOMOC ON)
 
 add_library(graphicswidgetsbindingsplugin SHARED ${graphicswidgetsbindings_SRCS})
-target_link_libraries(graphicswidgetsbindingsplugin ${KDE4_PLASMA_LIBS} ${QT_QTSCRIPT_LIBRARY} ${QT_QTDECLARATIVE_LIBRARY})
+target_link_libraries(graphicswidgetsbindingsplugin ${KDE4_PLASMA_LIBS} Qt4::QtScript Qt4::QtDeclarative)
 
 install(TARGETS graphicswidgetsbindingsplugin DESTINATION ${IMPORTS_INSTALL_DIR}/org/kde/plasma/graphicswidgets)
 install(FILES qmldir DESTINATION ${IMPORTS_INSTALL_DIR}/org/kde/plasma/graphicswidgets)

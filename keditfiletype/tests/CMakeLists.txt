@@ -10,4 +10,4 @@ kde4_add_unit_test(filetypestest TEST
  ../sharedmimeinfoversion.cpp
 )
 target_link_libraries(filetypestest ${KDE4_KDECORE_LIBS} ${KDE4_KIO_LIBRARY} ${KDE4_KDEUI_LIBRARIES}
-                      ${QT_QTCORE_LIBRARY} ${QT_QTGUI_LIBRARY} ${QT_QTTEST_LIBRARY})
+                      Qt4::QtCore Qt4::QtGui Qt4::QtTest)

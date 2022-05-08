@@ -26,7 +26,7 @@ INCLUDE_DIRECTORIES(
 set(CMAKE_AUTOMOC ON)
 
 add_library(corebindingsplugin SHARED ${corebindings_SRCS})
-target_link_libraries(corebindingsplugin ${KDE4_PLASMA_LIBS} ${QT_QTSCRIPT_LIBRARY} ${QT_QTDECLARATIVE_LIBRARY} ${KDECLARATIVE_LIBRARIES})
+target_link_libraries(corebindingsplugin ${KDE4_PLASMA_LIBS} Qt4::QtScript Qt4::QtDeclarative ${KDECLARATIVE_LIBRARIES})
 
 install(TARGETS corebindingsplugin DESTINATION ${IMPORTS_INSTALL_DIR}/org/kde/plasma/core)
 install(FILES qmldir DESTINATION ${IMPORTS_INSTALL_DIR}/org/kde/plasma/core)

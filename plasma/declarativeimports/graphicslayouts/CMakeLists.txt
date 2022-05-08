@@ -15,7 +15,7 @@ INCLUDE_DIRECTORIES(
 set(CMAKE_AUTOMOC ON)
 
 add_library(graphicslayoutsbindingsplugin SHARED ${graphicslayoutsbindings_SRCS})
-target_link_libraries(graphicslayoutsbindingsplugin ${QT_QTCORE_LIBRARY} ${QT_QTGUI_LIBRARY} ${QT_QTSCRIPT_LIBRARY} ${QT_QTDECLARATIVE_LIBRARY})
+target_link_libraries(graphicslayoutsbindingsplugin Qt4::QtCore Qt4::QtGui Qt4::QtScript Qt4::QtDeclarative)
 
 install(TARGETS graphicslayoutsbindingsplugin DESTINATION ${IMPORTS_INSTALL_DIR}/org/kde/plasma/graphicslayouts)
 install(FILES qmldir DESTINATION ${IMPORTS_INSTALL_DIR}/org/kde/plasma/graphicslayouts)

@@ -55,7 +55,7 @@ set(jpegthumbnail_PART_SRCS jpegcreator.cpp)
 kde4_add_kcfg_files(jpegthumbnail_PART_SRCS jpegcreatorsettings.kcfgc)
 kde4_add_plugin(jpegthumbnail ${jpegthumbnail_PART_SRCS})
 
-target_link_libraries(jpegthumbnail ${QT_QTCORE_LIBRARY} ${QT_QTGUI_LIBRARY} ${JPEG_LIBRARIES} ${KDE4_KIO_LIBS})
+target_link_libraries(jpegthumbnail Qt4::QtCore Qt4::QtGui ${JPEG_LIBRARIES} ${KDE4_KIO_LIBS})
 
 if (HAVE_EXIV2)
     set_source_files_properties(jpegcreator.cpp PROPERTIES
@@ -94,7 +94,7 @@ set(htmlthumbnail_PART_SRCS htmlcreator.cpp)
 
 kde4_add_plugin(htmlthumbnail ${htmlthumbnail_PART_SRCS})
 
-target_link_libraries(htmlthumbnail ${KDE4_KIO_LIBS} ${QT_QTWEBKIT_LIBRARY})
+target_link_libraries(htmlthumbnail ${KDE4_KIO_LIBS} Qt4::QtWebKit)
 
 install(TARGETS htmlthumbnail DESTINATION ${PLUGIN_INSTALL_DIR})
 endif(QT_QTWEBKIT_FOUND)

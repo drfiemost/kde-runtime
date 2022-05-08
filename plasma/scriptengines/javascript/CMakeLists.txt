@@ -55,10 +55,10 @@ target_link_libraries(plasma_appletscript_simple_javascript
                        ${KDE4_KDECORE_LIBS}
                        ${KDE4_KIO_LIBS}
                        ${KDE4_PLASMA_LIBS}
-                       ${QT_QTDECLARATIVE_LIBRARY}
-                       ${QT_QTSCRIPT_LIBRARY}
-                       ${QT_QTUITOOLS_LIBRARY}
-                       ${QT_QTXML_LIBRARY}
+                       Qt4::QtDeclarative
+                       Qt4::QtScript
+                       Qt4::QtUiTools
+                       Qt4::QtXml
                        )
 
 install(TARGETS plasma_appletscript_simple_javascript DESTINATION ${PLUGIN_INSTALL_DIR})
@@ -81,7 +81,7 @@ target_link_libraries(plasma_runnerscript_javascript
                       ${KDE4_KDECORE_LIBS}
                       ${KDE4_KIO_LIBS}
                       ${KDE4_PLASMA_LIBS}
-                      ${QT_QTSCRIPT_LIBRARY})
+                      Qt4::QtScript)
 
 install(TARGETS plasma_runnerscript_javascript DESTINATION ${PLUGIN_INSTALL_DIR})
 install(FILES data/plasma-scriptengine-runner-javascript.desktop DESTINATION ${SERVICES_INSTALL_DIR})
@@ -106,7 +106,7 @@ target_link_libraries(plasma_dataenginescript_javascript
                       ${KDE4_KDECORE_LIBS}
                       ${KDE4_KIO_LIBS}
                       ${KDE4_PLASMA_LIBS}
-                      ${QT_QTSCRIPT_LIBRARY})
+                      Qt4::QtScript)
 
 install(TARGETS plasma_dataenginescript_javascript DESTINATION ${PLUGIN_INSTALL_DIR})
 install(FILES data/plasma-scriptengine-dataengine-javascript.desktop DESTINATION ${SERVICES_INSTALL_DIR})
@@ -158,10 +158,9 @@ kde4_add_plugin(plasma_appletscript_declarative ${declarative_appletscript_SRCS}
 target_link_libraries(plasma_appletscript_declarative
     ${KDE4_PLASMA_LIBS}
     ${KDE4_KIO_LIBS}
-    ${QT_QTSCRIPT_LIBRARY}
-    ${QT_QTDECLARATIVE_LIBRARY}
-    ${QT_QTUITOOLS_LIBRARY}
-
+    Qt4::QtScript
+    Qt4::QtDeclarative
+    Qt4::QtUiTools
 )
 
 

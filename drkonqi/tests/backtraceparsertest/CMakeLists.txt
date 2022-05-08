@@ -1,5 +1,5 @@
 kde4_add_unit_test( backtraceparsertest fakebacktracegenerator.cpp backtraceparsertest.cpp)
-target_link_libraries( backtraceparsertest ${QT_QTTEST_LIBRARY} ${QT_QTCORE_LIBRARY} drkonqi_backtrace_parser)
+target_link_libraries( backtraceparsertest Qt4::QtTest Qt4::QtCore drkonqi_backtrace_parser)
 
 kde4_add_executable(backtraceparsertest_manual TEST fakebacktracegenerator.cpp backtraceparsertest_manual.cpp)
 target_link_libraries(backtraceparsertest_manual drkonqi_backtrace_parser)

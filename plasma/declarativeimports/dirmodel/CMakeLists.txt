@@ -9,8 +9,8 @@ set(CMAKE_AUTOMOC ON)
 
 kde4_add_library(dirmodelplugin SHARED ${dirmodel_SRCS})
 target_link_libraries(dirmodelplugin
-        ${QT_QTCORE_LIBRARY}
-        ${QT_QTDECLARATIVE_LIBRARY}
+        Qt4::QtCore
+        Qt4::QtDeclarative
         ${KDE4_KIO_LIBS}
         )
 

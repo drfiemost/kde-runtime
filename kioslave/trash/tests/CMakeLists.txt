@@ -16,7 +16,7 @@ kde4_add_unit_test(testtrash ${testtrash_SRCS})
 
 set(kio_trash_LIBS ${KDE4_KIO_LIBS} ${KDE4_SOLID_LIBS})
 
-target_link_libraries(testtrash ${kio_trash_LIBS} ${QT_QTTEST_LIBRARY})
+target_link_libraries(testtrash ${kio_trash_LIBS} Qt4::QtTest)
 if(APPLE)
     target_link_libraries(testtrash "-framework DiskArbitration")
 endif(APPLE)
@@ -27,4 +27,4 @@ set(lockingtest_SRCS lockingtest.cpp ../kinterprocesslock.cpp )
 
 kde4_add_executable(lockingtest NOGUI ${lockingtest_SRCS})
 
-target_link_libraries(lockingtest ${QT_QTCORE_LIBRARY} ${QT_QTDBUS_LIBRARY})
+target_link_libraries(lockingtest Qt4::QtCore Qt4::QtDBus)

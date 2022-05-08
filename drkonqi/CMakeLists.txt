@@ -76,7 +76,7 @@ kde4_add_executable(drkonqi ${drkonqi_SRCS})
 
 target_link_libraries(drkonqi
     ${KDE4_KIO_LIBS}
-    ${QT_QTWEBKIT_LIBRARY}
+    Qt4::QtWebKit
     ${KDE4_KDEWEBKIT_LIBRARY}
     ${KDEPIMLIBS_KXMLRPCCLIENT_LIBRARY}
     drkonqi_backtrace_parser
