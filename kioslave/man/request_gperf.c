@@ -1,4 +1,4 @@
-/* C++ code produced by gperf version 3.0.4 */
+/* C++ code produced by gperf version 3.1 */
 /* Command-line: gperf -L C++ -F ', REQ_UNKNOWN' -I --null-strings -compare-strncmp requests.gperf  */
 /* Computed positions: -k'1,$' */
 
@@ -26,7 +26,7 @@
       && ('w' == 119) && ('x' == 120) && ('y' == 121) && ('z' == 122) \
       && ('{' == 123) && ('|' == 124) && ('}' == 125) && ('~' == 126))
 /* The character set is not based on ISO-646.  */
-#error "gperf generated tables don't work with this execution character set. Please report a bug to <bug-gnu-gperf@gnu.org>."
+#error "gperf generated tables don't work with this execution character set. Please report a bug to <bug-gperf@gnu.org>."
 #endif
 
 #line 2 "requests.gperf"
@@ -43,13 +43,13 @@ struct Requests { const char *name; RequestNum number; };
 class Perfect_Hash
 {
 private:
-  static inline unsigned int hash (const char *str, unsigned int len);
+  static inline unsigned int hash (const char *str, size_t len);
 public:
-  static struct Requests *in_word_set (const char *str, unsigned int len);
+  static struct Requests *in_word_set (const char *str, size_t len);
 };
 
 inline unsigned int
-Perfect_Hash::hash (register const char *str, register unsigned int len)
+Perfect_Hash::hash (const char *str, size_t len)
 {
   static unsigned short asso_values[] =
     {
@@ -80,11 +80,11 @@ Perfect_Hash::hash (register const char *str, register unsigned int len)
       468, 468, 468, 468, 468, 468, 468, 468, 468, 468,
       468, 468, 468, 468, 468, 468, 468, 468, 468
     };
-  return len + asso_values[(unsigned char)str[len - 1]] + asso_values[(unsigned char)str[0]+3];
+  return len + asso_values[static_cast<unsigned char>(str[len - 1])] + asso_values[static_cast<unsigned char>(str[0]+3)];
 }
 
 struct Requests *
-Perfect_Hash::in_word_set (register const char *str, register unsigned int len)
+Perfect_Hash::in_word_set (const char *str, size_t len)
 {
   static struct Requests wordlist[] =
     {
@@ -587,11 +587,11 @@ Perfect_Hash::in_word_set (register const char *str, register unsigned int len)
 
   if (len <= MAX_WORD_LENGTH && len >= MIN_WORD_LENGTH)
     {
-      register int key = hash (str, len);
+      unsigned int key = hash (str, len);
 
-      if (key <= MAX_HASH_VALUE && key >= 0)
+      if (key <= MAX_HASH_VALUE)
         {
-          register const char *s = wordlist[key].name;
+          const char *s = wordlist[key].name;
 
           if (s && *str == *s && !strncmp (str + 1, s + 1, len - 1) && s[len] == '\0')
             return &wordlist[key];
