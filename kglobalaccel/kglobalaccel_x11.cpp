@@ -37,6 +37,7 @@
 
 #include <X11/X.h>
 #include <X11/Xlib.h>
+#include <X11/XKBlib.h>
 #include <X11/Xutil.h>
 #include <X11/keysym.h>
 #include <fixx11h.h>
@@ -108,8 +109,8 @@ bool KGlobalAccelImpl::grabKey( int keyQt, bool grab )
 	// can remove shift for some keys. (all the %&* and such)
 	if( !(keyQt & Qt::SHIFT) &&
 	    !KKeyServer::isShiftAsModifierAllowed( keyQt ) &&
-	    keySymX != XKeycodeToKeysym( QX11Info::display(), keyCodeX, 0 ) &&
-	    keySymX == XKeycodeToKeysym( QX11Info::display(), keyCodeX, 1 ) )
+	    keySymX != XkbKeycodeToKeysym( QX11Info::display(), keyCodeX, 0, 0 ) &&
+	    keySymX == XkbKeycodeToKeysym( QX11Info::display(), keyCodeX, 0, 1 ) )
 	{
 		kDebug() << "adding shift to the grab";
 		keyModX |= KKeyServer::modXShift();
@@ -224,7 +225,7 @@ bool KGlobalAccelImpl::x11KeyPress( const XEvent *pEvent )
 	// If numlock is active and a keypad key is pressed, XOR the SHIFT state.
 	//  e.g., KP_4 => Shift+KP_Left, and Shift+KP_4 => KP_Left.
 	if( pEvent->xkey.state & KKeyServer::modXNumLock() ) {
-		uint sym = XKeycodeToKeysym( QX11Info::display(), keyCodeX, 0 );
+		uint sym = XkbKeycodeToKeysym( QX11Info::display(), keyCodeX, 0, 0 );
 		// If this is a keypad key,
 		if( sym >= XK_KP_Space && sym <= XK_KP_9 ) {
 			switch( sym ) {
