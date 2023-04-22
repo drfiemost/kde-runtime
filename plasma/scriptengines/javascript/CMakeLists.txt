@@ -1,7 +1,6 @@
 # APPLET
 
 if(KDE_PLATFORM_FEATURE_BINARY_COMPATIBLE_FEATURE_REDUCTION)
-    set(PLASMA_NO_KDEWEBKIT TRUE)
     set(PLASMA_NO_KNEWSTUFF TRUE)
     set(PLASMA_NO_SOLID TRUE)
     set(PLASMA_NO_KIO TRUE)
@@ -166,7 +165,3 @@ target_link_libraries(plasma_appletscript_declarative
 
 install(TARGETS plasma_appletscript_declarative DESTINATION ${PLUGIN_INSTALL_DIR})
 install(FILES data/plasma-scriptengine-applet-declarative.desktop DESTINATION ${SERVICES_INSTALL_DIR})
-
-if(NOT QT_QTWEBKIT_FOUND)
-    add_definitions(-DPLASMA_NO_KDEWEBKIT)
-endif(NOT QT_QTWEBKIT_FOUND)

@@ -47,9 +47,6 @@
 #include <Plasma/ToolButton>
 #include <Plasma/TreeView>
 #include <Plasma/VideoWidget>
-#ifndef PLASMA_NO_KDEWEBKIT
-#include <Plasma/WebView>
-#endif
 
 #include "declarativetabbar.h"
 
@@ -101,9 +98,6 @@ void GraphicsWidgetsBindingsPlugin::registerTypes(const char *uri)
     qmlRegisterType<Plasma::ToolButton>(uri, 0, 1, "ToolButton");
     qmlRegisterType<Plasma::TreeView>(uri, 0, 1, "TreeView");
     qmlRegisterType<Plasma::VideoWidget>(uri, 0, 1, "VideoWidget");
-#ifndef PLASMA_NO_KDEWEBKIT
-    qmlRegisterType<Plasma::WebView>(uri, 0, 1, "WebView");
-#endif
 }
 
 

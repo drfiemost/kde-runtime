@@ -49,9 +49,6 @@
 #include <Plasma/TextEdit>
 #include <Plasma/ToolButton>
 #include <Plasma/TreeView>
-#ifndef PLASMA_NO_KDEWEBKIT
-#include <Plasma/WebView>
-#endif
 #include <Plasma/VideoWidget>
 
 
@@ -80,10 +77,6 @@ QGraphicsWidget *createTextEdit(QGraphicsWidget *parent) { return new Plasma::Te
 QGraphicsWidget *createToolButton(QGraphicsWidget *parent) { return new Plasma::ToolButton(parent); }
 QGraphicsWidget *createTreeView(QGraphicsWidget *parent) { return new Plasma::TreeView(parent); }
 QGraphicsWidget *createVideoWidget(QGraphicsWidget *parent) { return new Plasma::VideoWidget(parent); }
-#ifndef PLASMA_NO_KDEWEBKIT
-QGraphicsWidget *createWebView(QGraphicsWidget *parent) { return new Plasma::WebView(parent); }
-QGraphicsWidget *createGraphicsWidget(QGraphicsWidget *parent) { return new QGraphicsWidget(parent); }
-#endif
 
 UiLoader::UiLoader()
 {
@@ -112,10 +105,6 @@ UiLoader::UiLoader()
     m_widgetCtors.insert("ToolButton", createToolButton);
     m_widgetCtors.insert("TreeView", createTreeView);
     m_widgetCtors.insert("VideoWidget", createVideoWidget);
-#ifndef PLASMA_NO_KDEWEBKIT
-    m_widgetCtors.insert("WebView", createWebView);
-    m_widgetCtors.insert("GraphicsWidget", createWebView);
-#endif
 }
 
 UiLoader::~UiLoader()
