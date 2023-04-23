@@ -42,13 +42,6 @@ set_package_properties(SLP PROPERTIES DESCRIPTION "SLP (Service Location Protoco
                        PURPOSE "Provides SLP support in the network:/ kioslave."
                       )
 
-find_package(LibAttica 0.1.4)
-set_package_properties(LibAttica PROPERTIES DESCRIPTION "A library to access Open Collaboration Service providers"
-                       URL "https://projects.kde.org/attica"
-                       TYPE OPTIONAL
-                       PURPOSE "Attica is needed for the Get Hot New Stuff support"
-                      )
-
 macro_optional_find_package(QCA2 2.0.0)
 set_package_properties(QCA2 PROPERTIES DESCRIPTION "Support for remote plasma widgets"
                        URL "http://delta.affinix.com/qca"
@@ -119,9 +112,6 @@ add_subdirectory(kcmshell)
 add_subdirectory(kdebugdialog)
 macro_optional_add_subdirectory(khelpcenter)
 add_subdirectory(knetattach)
-if(LIBATTICA_FOUND)
-    add_subdirectory(knewstuff)
-endif(LIBATTICA_FOUND)
 macro_optional_add_subdirectory(keditfiletype)
 if ( UNIX )
    add_subdirectory(kdesu)
@@ -164,11 +154,6 @@ add_subdirectory(desktoptheme)
 if ( NOT WINCE )
   add_subdirectory(pics)
 endif ( NOT WINCE )
-
-# KDE integration for attica
-if(LIBATTICA_FOUND)
-  macro_optional_add_subdirectory(attica)
-endif(LIBATTICA_FOUND)
 
 feature_summary(WHAT ALL INCLUDE_QUIET_PACKAGES FATAL_ON_MISSING_REQUIRED_PACKAGES)
 

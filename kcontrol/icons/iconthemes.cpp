@@ -44,9 +44,6 @@
 #include <kstandarddirs.h>
 #include <kservice.h>
 #include <kconfig.h>
-#ifdef ENABLE_KNEWSTUFF3
-#include <knewstuff3/downloaddialog.h>
-#endif
 
 #undef Unsorted
 
@@ -106,13 +103,7 @@ IconThemesConfig::IconThemesConfig(const KComponentData &inst, QWidget *parent)
   installButton->setToolTip(i18n("Install a theme archive file you already have locally"));
   installButton->setWhatsThis(i18n("If you already have a theme archive locally, this button will unpack it and make it available for KDE applications"));
   connect(installButton,SIGNAL(clicked()),SLOT(installNewTheme()));
-#ifdef ENABLE_KNEWSTUFF3
-  KPushButton *newButton=new KPushButton( KIcon("get-hot-new-stuff"), i18n("Get New Themes..."), this);
-  newButton->setObjectName( QLatin1String("GetNewTheme" ));
-  newButton->setToolTip(i18n("Get new themes from the Internet"));
-  newButton->setWhatsThis(i18n("You need to be connected to the Internet to use this action. A dialog will display a list of themes from the http://www.kde.org website. Clicking the Install button associated with a theme will install this theme locally."));
-  connect(newButton,SIGNAL(clicked()),SLOT(getNewTheme()));
-#endif
+
   m_removeButton=new KPushButton( KIcon("edit-delete"), i18n("Remove Theme"), this);
   m_removeButton->setObjectName( QLatin1String("RemoveTheme" ));
   m_removeButton->setToolTip(i18n("Remove the selected theme from your disk"));
@@ -124,10 +115,7 @@ IconThemesConfig::IconThemesConfig(const KComponentData &inst, QWidget *parent)
   topLayout->addWidget(m_preview);
   topLayout->addWidget(m_iconThemes);
   QHBoxLayout *lg = new QHBoxLayout();
-#ifdef ENABLE_KNEWSTUFF3
-  lg->addWidget(newButton);
-  lg->addStretch(0);
-#endif
+
   lg->addWidget(installButton);
   lg->addWidget(m_removeButton);
   topLayout->addLayout(lg);
@@ -318,39 +306,7 @@ QStringList IconThemesConfig::findThemeDirs(const QString &archiveName)
   archive.close();
   return foundThemes;
 }
-#ifdef ENABLE_KNEWSTUFF3
-void IconThemesConfig::getNewTheme()
-{
-  KNS3::DownloadDialog dialog("icons.knsrc", this);
-  dialog.exec();
-  if (!dialog.changedEntries().isEmpty()) {
-    for(int i = 0; i < dialog.changedEntries().size(); i ++) {
-      if(dialog.changedEntries().at(i).status() == KNS3::Entry::Installed
-         && !dialog.changedEntries().at(i).installedFiles().isEmpty()) {
-          const QString themeTmpFile = dialog.changedEntries().at(i).installedFiles().at(0);
-          const QString name = dialog.changedEntries().at(i).installedFiles().at(0).section('/', -2, -2);
-          kDebug()<<"IconThemesConfig::getNewTheme() themeTmpFile="<<themeTmpFile<<"name="<<name;
-          QStringList themeNames = findThemeDirs(themeTmpFile);
-          if (themeNames.isEmpty()) {
-              //dialog.changedEntries().at(i)->setStatus(KNS3::Entry::Invalid);
-          }
-          else if (! installThemes(themeNames, themeTmpFile)) {
-              //dialog.changedEntries().at(i)->setStatus(KNS3::Entry::Invalid);
-          }
-      }
-    }
 
-    // reload the display icontheme items
-    KIconLoader::global()->newIconLoader();
-    loadThemes();
-    QTreeWidgetItem *item=iconThemeItem(KIconTheme::current());
-    if (item)
-        m_iconThemes->setCurrentItem(item);
-    updateRemoveButton();
-    load();
-  }
-}
-#endif
 void IconThemesConfig::removeSelectedTheme()
 {
   QTreeWidgetItem *selected = m_iconThemes->currentItem();

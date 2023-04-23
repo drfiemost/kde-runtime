@@ -54,9 +54,6 @@ public:
 protected Q_SLOTS:
   void themeSelected(QTreeWidgetItem *item);
   void installNewTheme();
-#ifdef ENABLE_KNEWSTUFF3
-  void getNewTheme();
-#endif
   void removeSelectedTheme();
 
 private:
