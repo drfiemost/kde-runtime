@@ -22,12 +22,6 @@
 #include <QDeclarativeItem>
 #include <QUrl>
 
-#ifdef ENABLE_KACTIVITIES
-namespace KActivities {
-    class ResourceInstance;
-}
-#endif
-
 class QTimer;
 class QGraphicsView;
 
@@ -86,9 +80,6 @@ public Q_SLOTS:
     void notifyFocusedOut();
 
 private:
-#ifdef ENABLE_KACTIVITIES
-    KActivities::ResourceInstance *m_resourceInstance;
-#endif
     QUrl m_uri;
     QString m_mimetype;
     QString m_title;

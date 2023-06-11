@@ -1,12 +1,5 @@
 project(plasmaextracomponents)
 
-find_package(KActivities QUIET CONFIG)
-set_package_properties(KActivities PROPERTIES DESCRIPTION "Library and infrastructure for using Activities from applications"
-                       URL "https://projects.kde.org/kactivities"
-		       TYPE OPTIONAL
-                       PURPOSE "Provides the ability to access activities from QML."
-                      )
-
 set(plasmaextracomponents_SRCS
     appbackgroundprovider.cpp
     resourceinstance.cpp
@@ -14,22 +7,11 @@ set(plasmaextracomponents_SRCS
     fallbackcomponent.cpp
     )
 
-if(KActivities_FOUND)
-  add_definitions(-DENABLE_KACTIVITIES)
-  include_directories(
-        ${KACTIVITIES_INCLUDE_DIRS}
-  )
-endif(KActivities_FOUND)
-
 set(CMAKE_AUTOMOC ON)
 
 add_library(plasmaextracomponentsplugin SHARED ${plasmaextracomponents_SRCS})
 target_link_libraries(plasmaextracomponentsplugin Qt4::QtCore Qt4::QtDeclarative
                                                     Qt4::QtGui ${KDE4_PLASMA_LIBS} )
-
-if(KActivities_FOUND)
-  target_link_libraries(plasmaextracomponentsplugin ${KACTIVITIES_LIBRARY} )
-endif(KActivities_FOUND)
 
 install(TARGETS plasmaextracomponentsplugin DESTINATION ${IMPORTS_INSTALL_DIR}/org/kde/plasma/extras)
 
