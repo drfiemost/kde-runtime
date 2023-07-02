@@ -3,7 +3,7 @@ include_directories( ${CMAKE_CURRENT_SOURCE_DIR}/.. ${KDE4_INCLUDES} )
 
 ########### filetypestest ###############
 
-kde4_add_unit_test(filetypestest TEST 
+kde4_add_unit_test(filetypestest 
  filetypestest.cpp
  ../mimetypedata.cpp
  ../mimetypewriter.cpp
