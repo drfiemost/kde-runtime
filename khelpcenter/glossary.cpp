@@ -48,10 +48,10 @@ class SectionItem : public QTreeWidgetItem
 {
     public:
         SectionItem( QTreeWidgetItem *parent, const QString &text )
-	: QTreeWidgetItem( parent )
+            : QTreeWidgetItem( parent )
         {
-	  setText(0,text);
-	  setIcon(0,SmallIcon( "help-contents" ));
+            setText(0,text);
+            setIcon(0,SmallIcon( "help-contents" ));
         }
 };
 
@@ -59,9 +59,9 @@ class EntryItem : public QTreeWidgetItem
 {
     public:
         EntryItem( SectionItem *parent, const QString &term, const QString &id )
-	: QTreeWidgetItem( parent ), m_id( id )
+            : QTreeWidgetItem( parent ), m_id( id )
         {
-	  setText(0,term);
+            setText(0,term);
         }
 
         QString id() const { return m_id; }
@@ -78,7 +78,7 @@ Glossary::Glossary( QWidget *parent ) : QTreeWidget( parent )
     setFrameStyle( QFrame::NoFrame );
 
     connect( this, SIGNAL( itemActivated(QTreeWidgetItem *, int) ),
-	     this, SLOT( treeItemSelected( QTreeWidgetItem * ) ) );
+            this, SLOT( treeItemSelected( QTreeWidgetItem * ) ) );
 
     setHeaderHidden(true);
     setAllColumnsShowFocus( true );
@@ -104,10 +104,10 @@ void Glossary::showEvent(QShowEvent *event)
     if ( !m_initialized )
     {
         if ( cacheStatus() == NeedRebuild )
-	  rebuildGlossaryCache();
+            rebuildGlossaryCache();
         else
-	  buildGlossaryTree();
-	  m_initialized = true;
+            buildGlossaryTree();
+        m_initialized = true;
     }
     QTreeWidget::showEvent(event);
 }
@@ -125,8 +125,8 @@ const GlossaryEntry &Glossary::entry( const QString &id ) const
 Glossary::CacheStatus Glossary::cacheStatus() const
 {
     if ( !QFile::exists( m_cacheFile ) ||
-	m_config->group("Glossary").readPathEntry( "CachedGlossary", QString() ) != m_sourceFile ||
-	m_config->group("Glossary").readEntry( "CachedGlossaryTimestamp" ).toInt() != glossaryCTime() )
+            m_config->group("Glossary").readPathEntry( "CachedGlossary", QString() ) != m_sourceFile ||
+            m_config->group("Glossary").readEntry( "CachedGlossaryTimestamp" ).toInt() != glossaryCTime() )
         return NeedRebuild;
 
     return CacheOk;
@@ -162,7 +162,7 @@ void Glossary::rebuildGlossaryCache()
     {
         kError() << "could not start process" << meinproc->program();
         if (mainWindow && !m_alreadyWarned)
-	{
+        {
             ; // add warning message box with don't display again option 
               // http://api.kde.org/4.0-api/kdelibs-apidocs/kdeui/html/classKDialog.html
             m_alreadyWarned = true;
@@ -181,7 +181,7 @@ void Glossary::meinprocFinished( int exitCode, QProcess::ExitStatus exitStatus )
         kError() << "running" << meinproc->program() << "failed with exitCode" << exitCode;
         kError() << "stderr output:" << meinproc->readAllStandardError(); 
         if (mainWindow && !m_alreadyWarned) 
-	{
+        {
             ; // add warning message box with don't display again option 
               // http://api.kde.org/4.0-api/kdelibs-apidocs/kdeui/html/classKDialog.html
             m_alreadyWarned = true;
@@ -225,7 +225,7 @@ void Glossary::buildGlossaryTree()
 
         QDomNodeList entryNodes = sectionElement.elementsByTagName( QLatin1String( "entry" ) );
         for ( int j = 0; j < entryNodes.count(); j++ ) 
-	{
+        {
             QDomElement entryElement = entryNodes.item( j ).toElement();
 
             QString entryId = entryElement.attribute( QLatin1String( "id" ) );
@@ -239,17 +239,17 @@ void Glossary::buildGlossaryTree()
             m_idDict.insert( entryId, entry );
 
             SectionItem *alphabSection = 0L;
-	    
-	    QTreeWidgetItemIterator it(m_alphabItem);
-	    while(*it)
-	    {
-	      if ( (*it)->text( 0 ) == QString( term[ 0 ].toUpper() ) )
-	      {
-		alphabSection = static_cast<SectionItem *>( (*it) );
-		break;
-	      }
-	      ++it;
-	    }
+
+            QTreeWidgetItemIterator it(m_alphabItem);
+            while(*it)
+            {
+                if ( (*it)->text( 0 ) == QString( term[ 0 ].toUpper() ) )
+                {
+                    alphabSection = static_cast<SectionItem *>( (*it) );
+                    break;
+                }
+                ++it;
+            }
 
             if ( !alphabSection )
                 alphabSection = new SectionItem( m_alphabItem, QString( term[ 0 ].toUpper() ) );
@@ -265,7 +265,7 @@ void Glossary::buildGlossaryTree()
             QDomNodeList referenceNodes = referencesElement.elementsByTagName( QLatin1String( "reference" ) );
             if ( referenceNodes.count() > 0 )
                 for ( int k = 0; k < referenceNodes.count(); k++ ) 
-		{
+                {
                     QDomElement referenceElement = referenceNodes.item( k ).toElement();
 
                     QString term = referenceElement.attribute( QLatin1String( "term" ) );
@@ -317,7 +317,7 @@ QString Glossary::entryToHtml( const GlossaryEntry &entry )
         GlossaryEntryXRef::List::ConstIterator it = seeAlsos.constBegin();
         GlossaryEntryXRef::List::ConstIterator end = seeAlsos.constEnd();
         for (; it != end; ++it)
-	{
+        {
             seeAlso += QLatin1String("<a href=\"glossentry:");
             seeAlso += (*it).id();
             seeAlso += QLatin1String("\">") + (*it).term();
@@ -341,11 +341,11 @@ void Glossary::slotSelectGlossEntry( const QString &id )
 
     EntryItem *newItem = m_idDict.value( id );
     EntryItem *curItem = dynamic_cast<EntryItem *>( currentItem() );
-    if ( curItem != 0 ) 
+    if ( curItem != nullptr ) 
     {
         if ( curItem->id() == id )
-	  return;
-	  curItem->parent()->setExpanded( false );
+            return;
+        curItem->parent()->setExpanded( false );
     }
 
     setCurrentItem( newItem );
