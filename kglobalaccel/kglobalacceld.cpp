@@ -541,23 +541,6 @@ bool KGlobalAccelD::unregister(const QString &componentUnique, const QString &sh
 
 }
 
-
-void KGlobalAccelD::unRegister(const QStringList &actionId)
-{
-#ifdef KDEDGLOBALACCEL_TRACE
-    kDebug() << actionId;
-#endif
-
-    // Stop grabbing the key
-    GlobalShortcut *shortcut = d->findAction(actionId);
-    if (shortcut) {
-        shortcut->unRegister();
-        scheduleWriteSettings();
-    }
-
-}
-
-
 QList<int> KGlobalAccelD::setShortcut(const QStringList &actionId,
                                         const QList<int> &keys, uint flags)
 {
