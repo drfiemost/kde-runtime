@@ -6,6 +6,7 @@ set_package_properties(BZip2 PROPERTIES DESCRIPTION "A high-quality data compres
                        PURPOSE "Provides the ability to read and write bzip2 compressed data files in the filter kioslave."
                       )
 
+set(FPHSA_NAME_MISMATCHED TRUE)
 macro_optional_find_package(LibLZMA)
 set_package_properties(LibLZMA PROPERTIES DESCRIPTION "A very high compression ratio data compressor"
                        URL "http://tukaani.org/xz/"
