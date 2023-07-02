@@ -393,6 +393,7 @@ bool SimpleJavaScriptApplet::eventFilter(QObject *watched, QEvent *event)
                 return true;
             }
         }
+        break;
 
         case QEvent::KeyRelease: {
             ScriptEnv *env = ScriptEnv::findScriptEnv(m_engine);
