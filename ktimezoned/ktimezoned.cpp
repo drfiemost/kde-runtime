@@ -505,7 +505,7 @@ void KTimeZoned::localChanged(const QString& path)
             }
             // The contents of the file pointed to by TZ has changed.
         }
-            // Fall through to LocaltimeLink
+            [[fallthrough]];
         case LocaltimeLink:
         case LocaltimeCopy:
         // The fallback methods below also set a watch for /etc/localtime in
