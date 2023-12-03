@@ -42,6 +42,8 @@
 
 #include <ctime>
 
+#include <algorithm>
+
 
 K_PLUGIN_FACTORY(KPasswdServerFactory,
                  registerPlugin<KPasswdServer>();
@@ -739,7 +741,7 @@ KPasswdServer::addAuthInfoItem(const QString &key, const KIO::AuthInfo &info, ql
 
    // Insert into list, keep the list sorted "longest path" first.
    authList->append(authItem);
-   qSort(authList->begin(), authList->end(), AuthInfoContainer::Sorter());
+   std::sort(authList->begin(), authList->end(), AuthInfoContainer::Sorter());
 }
 
 void
