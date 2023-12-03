@@ -389,7 +389,7 @@ void KCMLocale::initCalendarSettings()
     // Setup the Current Config/Settings
     // These are the currently saved User settings
     // This will be used to check if the kcm settings have been changed
-    calendarType = m_currentSettings.readEntry( "CalendarSystem", KGlobal::locale()->calendar()->calendarType() );
+    calendarType = m_currentSettings.readEntry( "CalendarSystem", KCalendarSystem::calendarLabel(KGlobal::locale()->calendar()->calendarSystem(), m_kcmLocale) );
     calendarGroup = QString::fromLatin1( "KCalendarSystem %1" ).arg( calendarType );
     m_currentCalendarSettings = m_currentSettings.group( calendarGroup );
 
@@ -397,7 +397,7 @@ void KCMLocale::initCalendarSettings()
     // These are the Group overrides, they exclude any User, Country, or C settings
     // This will be used in the merge to obtain the KCM Defaults
     // These settings should never be saved anywhere
-    calendarType = m_groupSettings.readEntry( "CalendarSystem", KGlobal::locale()->calendar()->calendarType() );
+    calendarType = m_groupSettings.readEntry( "CalendarSystem", KCalendarSystem::calendarLabel(KGlobal::locale()->calendar()->calendarSystem(), m_kcmLocale) );
     calendarGroup = QString::fromLatin1( "KCalendarSystem %1" ).arg( calendarType );
     m_groupCalendarSettings = m_groupSettings.group( calendarGroup );
 
@@ -2270,12 +2270,13 @@ void KCMLocale::initCalendarSystem()
 
     m_ui->m_comboCalendarSystem->clear();
 
-    QStringList calendarSystems = KCalendarSystem::calendarSystems();
+    QList<KLocale::CalendarSystem> calendarSystems = KCalendarSystem::calendarSystemsList();
 
-    foreach ( const QString &calendarType, calendarSystems ) {
-        m_ui->m_comboCalendarSystem->addItem( KCalendarSystem::calendarLabel(
-                                              KCalendarSystem::calendarSystemForCalendarType( calendarType ), m_kcmLocale ),
-                                              QVariant( calendarType ) );
+    for ( auto &calendarSystem: calendarSystems ) {
+        m_ui->m_comboCalendarSystem->addItem(
+            KCalendarSystem::calendarLabel(calendarSystem, m_kcmLocale ),
+            QVariant(KCalendarSystem::calendarLabel(calendarSystem, m_kcmLocale))
+        );
     }
 
     setCalendarSystem( m_kcmSettings.readEntry( "CalendarSystem", QString() ) );
@@ -2303,7 +2304,9 @@ void KCMLocale::setCalendarSystem( const QString &newValue )
     mergeCalendarSettings();
 
     // If item was changed, i.e. not immutable, then update locale
-    m_kcmLocale->setCalendar( m_kcmSettings.readEntry( "CalendarSystem", QString() ) );
+    m_kcmLocale->setCalendarSystem(
+        KCalendarSystem::calendarSystem(m_kcmSettings.readEntry("CalendarSystem", QString()))
+    );
 
     // Update the Calendar dependent widgets with the new Calendar System details
     initUseCommonEra();
@@ -2357,7 +2360,9 @@ void KCMLocale::setUseCommonEra( bool newValue )
     // No api to set, so need to force reload the locale
     m_kcmConfig->markAsClean();
     m_kcmLocale->setCountry( m_kcmSettings.readEntry( "Country", QString() ), m_kcmConfig.data() );
-    m_kcmLocale->setCalendar( m_kcmSettings.readEntry( "CalendarSystem", QString() ) );
+    m_kcmLocale->setCalendarSystem(
+        KCalendarSystem::calendarSystem(m_kcmSettings.readEntry( "CalendarSystem", QString()))
+    );
 }
 
 void KCMLocale::initShortYearWindow()
@@ -2401,7 +2406,9 @@ void KCMLocale::setShortYearWindow( int newValue )
     // No api to set, so need to force reload the locale and calendar
     m_kcmConfig->markAsClean();
     m_kcmLocale->setCountry( m_kcmSettings.readEntry( "Country", QString() ), m_kcmConfig.data() );
-    m_kcmLocale->setCalendar( m_kcmSettings.readEntry( "CalendarSystem", QString() ) );
+    m_kcmLocale->setCalendarSystem(
+        KCalendarSystem::calendarSystem(m_kcmSettings.readEntry( "CalendarSystem", QString()))
+    );
 }
 
 void KCMLocale::initWeekNumberSystem()
@@ -2798,7 +2805,9 @@ void KCMLocale::setAmPmPeriods( const QString &amPeriod, const QString &pmPeriod
         // No api to set, so need to force reload the locale
         m_kcmConfig->markAsClean();
         m_kcmLocale->setCountry( m_kcmSettings.readEntry( "Country", QString() ), m_kcmConfig.data() );
-        m_kcmLocale->setCalendar( m_kcmSettings.readEntry( "CalendarSystem", QString() ) );
+        m_kcmLocale->setCalendarSystem(
+            KCalendarSystem::calendarSystem(m_kcmSettings.readEntry("CalendarSystem", QString()))
+        );
     }
 
     updateSample();
