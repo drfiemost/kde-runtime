@@ -31,6 +31,8 @@
 
 #include <QtDBus/QtDBus>
 
+#include <algorithm>
+
 #define QL1S(x)  QLatin1String(x)
 #define QL1C(x)  QLatin1Char(x)
 
@@ -80,7 +82,7 @@ void KAutoWebSearch::populateProvidersList(QList<KUriFilterSearchProvider*>& sea
     favEngines.removeDuplicates();
     
     // Sort the items...
-    qStableSort(favEngines);
+    std::stable_sort(favEngines.begin(), favEngines.end());
 
     // Add the search engine set as the default provider...
     const QString defaultEngine = filter->defaultSearchEngine();

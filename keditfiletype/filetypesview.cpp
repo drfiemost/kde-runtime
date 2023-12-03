@@ -47,6 +47,8 @@
 #include "filetypedetails.h"
 #include "filegroupdetails.h"
 
+#include <algorithm>
+
 
 K_PLUGIN_FACTORY(FileTypesViewFactory, registerPlugin<FileTypesView>();)
 K_EXPORT_PLUGIN(FileTypesViewFactory("filetypes"))
@@ -186,7 +188,7 @@ void FileTypesView::readFileTypes()
     m_itemList.clear();
 
     KMimeType::List mimetypes = KMimeType::allMimeTypes();
-    qSort(mimetypes.begin(), mimetypes.end(), mimeTypeLessThan);
+    std::sort(mimetypes.begin(), mimetypes.end(), mimeTypeLessThan);
     KMimeType::List::const_iterator it2(mimetypes.constBegin());
     for (; it2 != mimetypes.constEnd(); ++it2) {
         const QString mimetype = (*it2)->name();

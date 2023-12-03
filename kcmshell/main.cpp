@@ -39,6 +39,8 @@
 #include <KIcon>
 #include <kdeversion.h>
 
+#include <algorithm>
+
 #include "main.moc"
 
 using namespace std;
@@ -70,7 +72,7 @@ static void listModules()
       m_modules.append(s);
   }
 
-  qStableSort(m_modules.begin(), m_modules.end(), caseInsensitiveLessThan);
+  std::stable_sort(m_modules.begin(), m_modules.end(), caseInsensitiveLessThan);
 }
 
 static KService::Ptr locateModule(const QString& module)

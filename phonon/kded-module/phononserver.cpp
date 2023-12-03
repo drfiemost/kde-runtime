@@ -53,6 +53,8 @@
 #include <alsa/asoundlib.h>
 #endif // HAVE_LIBASOUND2
 
+#include <algorithm>
+
 K_PLUGIN_FACTORY(PhononServerFactory,
         registerPlugin<PhononServer>();
         )
@@ -775,7 +777,7 @@ void PhononServer::findDevices()
     }
 
     if (!askToRemoveAudio.isEmpty()) {
-        qSort(askToRemoveAudio);
+        std::sort(askToRemoveAudio.begin(), askToRemoveAudio.end());
         QMetaObject::invokeMethod(this, "askToRemoveDevices", Qt::QueuedConnection,
                 Q_ARG(QStringList, askToRemoveAudio),
                 Q_ARG(int, AudioOutputDeviceType | AudioCaptureDeviceType),
@@ -783,7 +785,7 @@ void PhononServer::findDevices()
     }
 
     if (!askToRemoveVideo.isEmpty()) {
-        qSort(askToRemoveVideo);
+        std::sort(askToRemoveVideo.begin(), askToRemoveVideo.end());
         QMetaObject::invokeMethod(this, "askToRemoveDevices", Qt::QueuedConnection,
                 Q_ARG(QStringList, askToRemoveVideo),
                 Q_ARG(int, VideoCaptureDeviceType),
@@ -794,9 +796,9 @@ void PhononServer::findDevices()
     renameDevices(&m_audioCaptureDevices);
     renameDevices(&m_videoCaptureDevices);
 
-    qSort(m_audioOutputDevices);
-    qSort(m_audioCaptureDevices);
-    qSort(m_videoCaptureDevices);
+    std::sort(m_audioOutputDevices.begin(), m_audioOutputDevices.end());
+    std::sort(m_audioCaptureDevices.begin(), m_audioCaptureDevices.end());
+    std::sort(m_videoCaptureDevices.begin(), m_videoCaptureDevices.end());
 
     QMutableListIterator<PS::DeviceInfo> it(m_audioOutputDevices);
     while (it.hasNext()) {
