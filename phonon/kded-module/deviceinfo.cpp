@@ -25,6 +25,8 @@
 #include <kdebug.h>
 #include <klocale.h>
 
+#include <algorithm>
+
 namespace PS
 {
 
@@ -149,7 +151,7 @@ void DeviceInfo::addAccess(const DeviceAccess &access)
     m_isAvailable |= !access.deviceIds().isEmpty();
 
     m_accessList << access;
-    qSort(m_accessList); // FIXME: do sorted insert
+    std::sort(m_accessList.begin(), m_accessList.end()); // FIXME: do sorted insert
 }
 
 void DeviceInfo::applyHardwareDatabaseOverrides()
