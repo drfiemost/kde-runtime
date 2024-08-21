@@ -17,16 +17,19 @@ kde4_add_ui_files(kwalletwizardtest_SRCS
    ../kwalletwizardpagegpgkey.ui
 )
 
-if (QGPGME_FOUND)
+if ((GPGME_FOUND AND QGPGME_FOUND) OR Gpgmepp_FOUND)
     kde4_add_ui_files(kwalletwizardtest_SRCS
         ../kwalletwizardpagepasswordgpg.ui)
-endif(QGPGME_FOUND)
+endif()
 
 kde4_add_executable(kwalletwizardtest TEST ${kwalletwizardtest_SRCS})
 target_link_libraries(kwalletwizardtest ${KDE4_KDECORE_LIBS} ${KDE4_KDEUI_LIBS} Qt4::QtGui)
 if (QGPGME_FOUND)
     target_link_libraries(kwalletwizardtest ${QGPGME_LIBRARIES})
 endif(QGPGME_FOUND)
+if (Gpgmepp_FOUND)
+    target_link_libraries(kwalletwizardtest Gpgmepp)
+endif()
 
 set( EXECUTABLE_OUTPUT_PATH ${CMAKE_CURRENT_BINARY_DIR} )
 
