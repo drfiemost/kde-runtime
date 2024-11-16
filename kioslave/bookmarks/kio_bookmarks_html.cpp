@@ -37,10 +37,10 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 void BookmarksProtocol::echoBookmark( const KBookmark &bm)
 {
-  QString descriptionAsTitle = Qt::escape(bm.description());
+  QString descriptionAsTitle = bm.description().toHtmlEscaped();
   if (!descriptionAsTitle.isEmpty())
       descriptionAsTitle.prepend(QLatin1String("\" title=\""));
-  echo ("<li class=\"link\"><a href=\"" + bm.url().url() + descriptionAsTitle + "\"><img src=\"/icon/" + bm.icon() + "\"/>" + Qt::escape(bm.text()) + "</a></li>");
+  echo ("<li class=\"link\"><a href=\"" + bm.url().url() + descriptionAsTitle + "\"><img src=\"/icon/" + bm.icon() + "\"/>" + bm.text().toHtmlEscaped() + "</a></li>");
 }
 
 void BookmarksProtocol::echoSeparator()

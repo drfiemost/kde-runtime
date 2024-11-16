@@ -298,7 +298,7 @@ void NotifyByPopup::fillPopup(KPassivePopup *pop,int id,KNotifyConfig * config)
 		foreach ( const QString & it , config->actions ) 
 		{
 			i++;
-			linkCode+=QString::fromLatin1("&nbsp;<a href=\"%1/%2\">%3</a> ").arg( id ).arg( i ).arg( Qt::escape(it) );
+			linkCode+=QString::fromLatin1("&nbsp;<a href=\"%1/%2\">%3</a> ").arg( id ).arg( i ).arg( it.toHtmlEscaped() );
 		}
 		linkCode+=QString::fromLatin1("</p>");
 		QLabel *link = new QLabel(linkCode , vb );
