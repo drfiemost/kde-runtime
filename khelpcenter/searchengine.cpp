@@ -282,7 +282,7 @@ bool SearchEngine::search( const QString & words, const QString & method, int ma
       return false;
     }
 
-    QString txt = i18n("Search Results for '%1':", Qt::escape(words) );
+    QString txt = i18n("Search Results for '%1':", words.toHtmlEscaped() );
 
     mStderr = "<b>" + txt + "</b>\n";
 

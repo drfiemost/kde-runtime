@@ -485,7 +485,7 @@ void MANProtocol::get(const KUrl& url )
            "Check that you have typed the name using the correct upper and lower case characters.<br />"
            "If everything looks correct, then you may need to improve the search path "
            "for man pages; either using the environment variable MANPATH or using a matching file "
-           "in the /etc directory.", Qt::escape(title)));
+           "in the /etc directory.", title.toHtmlEscaped()));
        pageFound=false;
     }
     else if (foundPages.count()>1)
