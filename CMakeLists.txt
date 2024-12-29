@@ -35,13 +35,6 @@ set_package_properties(KDeclarative PROPERTIES DESCRIPTION "KDE Declarative (QML
                        PURPOSE "Required by corebindingsplugin (org.kde.plasma.core)"
                       )
 
-macro_optional_find_package(SLP)
-set_package_properties(SLP PROPERTIES DESCRIPTION "SLP (Service Location Protocol) implementation"
-                       URL "http://www.openslp.org/"
-                       TYPE OPTIONAL
-                       PURPOSE "Provides SLP support in the network:/ kioslave."
-                      )
-
 macro_optional_find_package(QCA2 2.0.0)
 set_package_properties(QCA2 PROPERTIES DESCRIPTION "Support for remote plasma widgets"
                        URL "http://delta.affinix.com/qca"
