@@ -128,7 +128,7 @@ void AppletsContainer::syncColumnSizes()
         }
         const QSizeF sizeFromHints = maxSize * m_mainLayout->count();
         //a bit of snap to avoid contents just too large
-        if (qAbs(sizeFromHints.width() - viewportSize.width()) > 128) {
+        if (std::abs(sizeFromHints.width() - viewportSize.width()) > 128) {
             viewportSize = sizeFromHints;
         }
     }
@@ -166,7 +166,7 @@ void AppletsContainer::updateSize()
         if (m_toolBox) {
             toolBoxSpace = m_viewportSize.width()/m_appletsPerColumn;
         }
-        resize(hint.width() + toolBoxSpace, qMin(size().height(), m_scrollWidget->viewportGeometry().height()));
+        resize(hint.width() + toolBoxSpace, std::min(size().height(), m_scrollWidget->viewportGeometry().height()));
         if (m_toolBox) {
             m_toolBox->setPos(QPoint(size().width() - toolBoxSpace/2, size().height()/2) -
             QPoint(m_toolBox->size().width()/2, m_toolBox->size().height()/2));
@@ -175,7 +175,7 @@ void AppletsContainer::updateSize()
         if (m_toolBox) {
             toolBoxSpace = m_viewportSize.height()/m_appletsPerRow;
         }
-        resize(qMin(size().width(), m_scrollWidget->viewportGeometry().width()), hint.height() + toolBoxSpace);
+        resize(std::min(size().width(), m_scrollWidget->viewportGeometry().width()), hint.height() + toolBoxSpace);
         if (m_toolBox) {
             m_toolBox->setPos(QPoint(size().width()/2, size().height() - toolBoxSpace/2) -
             QPoint(m_toolBox->size().width()/2, m_toolBox->size().height()/2));
@@ -391,7 +391,7 @@ void AppletsContainer::layoutApplet(Plasma::Applet* applet, const QPointF &pos)
     if (insertIndex == -1) {
         lay->insertItem(lay->count()-1, applet);
     } else {
-        lay->insertItem(qMin(insertIndex, lay->count()-1), applet);
+        lay->insertItem(std::min(insertIndex, lay->count()-1), applet);
     }
 
     connect(applet, SIGNAL(sizeHintChanged(Qt::SizeHint)), this, SIGNAL(appletSizeHintChanged()));
@@ -414,7 +414,7 @@ void AppletsContainer::addApplet(Plasma::Applet* applet, const int row, const in
     if (row <= 0) {
         lay->insertItem(lay->count()-1, applet);
     } else {
-        lay->insertItem(qMin(row, lay->count()-1), applet);
+        lay->insertItem(std::min(row, lay->count()-1), applet);
     }
 
     connect(applet, SIGNAL(sizeHintChanged(Qt::SizeHint)), this, SIGNAL(appletSizeHintChanged()));
@@ -539,8 +539,8 @@ void AppletsContainer::updateViewportGeometry()
     m_viewportSize = m_scrollWidget->viewportGeometry().size();
 
     //each applet with an optimal of 40 columns, 15 lines of text
-    m_appletsPerColumn = qMax((qreal)1, m_viewportSize.width() / (m_mSize.width()*40));
-    m_appletsPerRow = qMax((qreal)1, m_viewportSize.height() / (m_mSize.height()*15));
+    m_appletsPerColumn = std::max((qreal)1, m_viewportSize.width() / (m_mSize.width()*40));
+    m_appletsPerRow = std::max((qreal)1, m_viewportSize.height() / (m_mSize.height()*15));
 
     if (!m_containment || (m_expandAll && m_orientation != Qt::Horizontal)) {
         syncColumnSizes();

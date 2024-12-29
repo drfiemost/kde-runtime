@@ -148,7 +148,7 @@ BEGIN_DECLARE_METHOD(QGraphicsLinearLayout, removeItem) {
 } END_DECLARE_METHOD
 
 BEGIN_DECLARE_METHOD(QGraphicsLinearLayout, addStretch) {
-    self->addStretch(qMax(1, ctx->argument(0).toInt32()));
+    self->addStretch(std::max(1, ctx->argument(0).toInt32()));
     return eng->undefinedValue();
 } END_DECLARE_METHOD
 

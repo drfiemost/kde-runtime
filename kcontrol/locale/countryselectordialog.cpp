@@ -264,7 +264,7 @@ bool CountrySelectorDialog::editCountry(KControlLocale *locale)
 
         cm->addRegion(name, tag);
         QString spacedName = name + "  ";
-        lv1Width = qMax(lv1Width, fm.width(spacedName));
+        lv1Width = std::max(lv1Width, fm.width(spacedName));
     }
 
     // add all languages to the list

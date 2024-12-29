@@ -135,7 +135,7 @@ static int password2hash(const QByteArray& password, QByteArray& hash) {
 
 	QByteArray block1(shasz, 0);
 
-	sha.process(password.data(), qMin(password.size(), 16));
+	sha.process(password.data(), std::min(password.size(), 16));
 
 	// To make brute force take longer
 	for (int i = 0; i < 2000; i++) {
@@ -147,7 +147,7 @@ static int password2hash(const QByteArray& password, QByteArray& hash) {
 	sha.reset();
 
 	if (password.size() > 16) {
-		sha.process(password.data() + 16, qMin(password.size() - 16, 16));
+		sha.process(password.data() + 16, std::min(password.size() - 16, 16));
 		QByteArray block2(shasz, 0);
 		// To make brute force take longer
 		for (int i = 0; i < 2000; i++) {
@@ -159,7 +159,7 @@ static int password2hash(const QByteArray& password, QByteArray& hash) {
 		sha.reset();
 
 		if (password.size() > 32) {
-			sha.process(password.data() + 32, qMin(password.size() - 32, 16));
+			sha.process(password.data() + 32, std::min(password.size() - 32, 16));
 
 			QByteArray block3(shasz, 0);
 			// To make brute force take longer

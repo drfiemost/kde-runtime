@@ -85,7 +85,7 @@ bool TextCreator::create(const QString &path, int width, int height, QImage &img
 
     // this font is supposed to look good at small sizes
     QFont font = KGlobalSettings::smallestReadableFont();
-    font.setPixelSize( qMax(7, qMin( 10, ( pixmapSize.height() - 2 * yborder ) / 16 ) ) );
+    font.setPixelSize( std::max(7, std::min( 10, ( pixmapSize.height() - 2 * yborder ) / 16 ) ) );
     QFontMetrics fm( font );
 
     // calculate a better border so that the text is centered

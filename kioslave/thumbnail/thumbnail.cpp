@@ -304,9 +304,9 @@ void ThumbnailProtocol::get(const KUrl &url)
         QImage icon = getIcon();
 
         int x = img.width() - icon.width() - 4;
-        x = qMax( x, 0 );
+        x = std::max( x, 0 );
         int y = img.height() - icon.height() - 6;
-        y = qMax( y, 0 );
+        y = std::max( y, 0 );
         QPainter p(&img);
         p.setOpacity(m_iconAlpha/255.0);
         p.drawImage(x, y, icon);
@@ -452,7 +452,7 @@ void ThumbnailProtocol::drawPictureFrame(QPainter *painter, const QPoint &center
     p.drawImage(scaledFrameWidth, scaledFrameWidth, image);
     p.end();
 
-    int radius = qMax(frameWidth, 1);
+    int radius = std::max(frameWidth, 1);
 
     QImage shadow(r.size() + QSize(radius * 2, radius * 2), QImage::Format_ARGB32);
     shadow.fill(0);
@@ -495,7 +495,7 @@ QImage ThumbnailProtocol::thumbForDirectory(const KUrl& directory)
 
     const QPixmap folder = KIconLoader::global()->loadMimeTypeIcon(iconName,
                                                                    KIconLoader::Desktop,
-                                                                   qMin(m_width, m_height));
+                                                                   std::min(m_width, m_height));
     const int folderWidth  = folder.width();
     const int folderHeight = folder.height();
 

@@ -388,7 +388,7 @@ void DataModel::setItems(const QString &sourceName, const QVariantList &list)
         endRemoveRows();
     }
     emit dataChanged(createIndex(sourceIndex, 0),
-                     createIndex(sourceIndex + qMin(list.length(), oldLength), 0));
+                     createIndex(sourceIndex + std::min(list.length(), oldLength), 0));
 }
 
 void DataModel::removeSource(const QString &sourceName)

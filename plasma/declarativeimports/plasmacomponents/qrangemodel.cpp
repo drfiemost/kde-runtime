@@ -117,14 +117,14 @@ qreal QRangeModelPrivate::publicPosition(qreal position) const
     qreal rightEdge = ((stepSizeMultiplier + 1) * positionStep) + min;
 
     if (min < max) {
-        leftEdge = qMin(leftEdge, max);
-        rightEdge = qMin(rightEdge, max);
+        leftEdge = std::min(leftEdge, max);
+        rightEdge = std::min(rightEdge, max);
     } else {
-        leftEdge = qMax(leftEdge, max);
-        rightEdge = qMax(rightEdge, max);
+        leftEdge = std::max(leftEdge, max);
+        rightEdge = std::max(rightEdge, max);
     }
 
-    if (qAbs(leftEdge - position) <= qAbs(rightEdge - position))
+    if (std::abs(leftEdge - position) <= std::abs(rightEdge - position))
         return leftEdge;
     return rightEdge;
 }
@@ -152,8 +152,8 @@ qreal QRangeModelPrivate::publicValue(qreal value) const
     if (stepSizeMultiplier < 0)
         return minimum;
 
-    const qreal leftEdge = qMin(maximum, (stepSizeMultiplier * stepSize) + minimum);
-    const qreal rightEdge = qMin(maximum, ((stepSizeMultiplier + 1) * stepSize) + minimum);
+    const qreal leftEdge = std::min(maximum, (stepSizeMultiplier * stepSize) + minimum);
+    const qreal rightEdge = std::min(maximum, ((stepSizeMultiplier + 1) * stepSize) + minimum);
     const qreal middle = (leftEdge + rightEdge) / 2;
 
     return (value <= middle) ? leftEdge : rightEdge;
@@ -266,7 +266,7 @@ void QRangeModel::setRange(qreal min, qreal max)
     const qreal oldPosition = position();
 
     d->minimum = min;
-    d->maximum = qMax(min, max);
+    d->maximum = std::max(min, max);
 
     // Update internal position if it was changed. It can occurs if internal value changes, due to range update
     d->pos = d->equivalentPosition(d->value);
@@ -310,7 +310,7 @@ void QRangeModel::setMaximum(qreal max)
     Q_D(const QRangeModel);
     // if the new maximum value is smaller than
     // minimum, update minimum too
-    setRange(qMin(d->minimum, max), max);
+    setRange(std::min(d->minimum, max), max);
 }
 
 qreal QRangeModel::maximum() const
@@ -331,7 +331,7 @@ void QRangeModel::setStepSize(qreal stepSize)
 {
     Q_D(QRangeModel);
 
-    stepSize = qMax(qreal(0.0), stepSize);
+    stepSize = std::max(qreal(0.0), stepSize);
     if (qFuzzyCompare(stepSize, d->stepSize))
         return;
 

@@ -194,7 +194,7 @@ void NotifyByPopup::timerEvent(QTimerEvent * event)
 		int posy=pop->pos().y();
 		if(posy > m_nextPosition)
 		{
-			posy=qMax(posy-5,m_nextPosition);
+			posy=std::max(posy-5,m_nextPosition);
 			m_nextPosition = posy + pop->height();
 			cont = cont || posy != m_nextPosition;
 			pop->move(pop->pos().x(),posy);

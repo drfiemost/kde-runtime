@@ -254,7 +254,7 @@ void IconItem::valueChanged(const QVariant &value)
 
 void IconItem::loadPixmap()
 {
-    int size = qMin(width(), height());
+    int size = std::min(width(), height());
 
     //FIXME: Heuristic: allow 24x24 for icons/ that are in the systray(ugly)
     if (m_svgIcon && m_svgIcon->imagePath().contains("icons/") &&

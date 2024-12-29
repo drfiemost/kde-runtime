@@ -1278,7 +1278,7 @@ int fishProtocol::received(const char *buffer, KIO::fileoffset_t buflen)
             int dataSize = (rawRead > buflen?buflen:rawRead);
             if (!mimeTypeSent)
             {
-                int mimeSize = qMin(dataSize, (int)(mimeBuffer.size()-dataRead));
+                int mimeSize = std::min(dataSize, (int)(mimeBuffer.size()-dataRead));
                 memcpy(mimeBuffer.data()+dataRead,buffer,mimeSize);
                 dataRead += mimeSize;
                 rawRead -= mimeSize;

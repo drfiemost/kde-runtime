@@ -301,14 +301,14 @@ int main(int argc, char *argv[])
 #ifdef Q_WS_X11
     // Make sure we exit when the display gets closed.
     int x11Fd = initXconnection();
-    maxfd = qMax(maxfd, x11Fd);
+    maxfd = std::max(maxfd, x11Fd);
 #endif
 
     repo = new Repository;
     QVector<ConnectionHandler *> handler;
 
     pipe(pipeOfDeath);
-    maxfd = qMax(maxfd, pipeOfDeath[0]);
+    maxfd = std::max(maxfd, pipeOfDeath[0]);
 
     // Signal handlers
     struct sigaction sa;
@@ -414,7 +414,7 @@ int main(int argc, char *argv[])
 		    handler.append(0);
 		delete handler[fd];
 		handler[fd] = new ConnectionHandler(fd);
-                maxfd = qMax(maxfd, fd);
+                maxfd = std::max(maxfd, fd);
                 FD_SET(fd, &active_fds);
                 fcntl(fd, F_SETFL, fcntl(fd, F_GETFL) | O_NONBLOCK);
                 continue;

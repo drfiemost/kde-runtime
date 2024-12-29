@@ -475,7 +475,7 @@ void ArchiveProtocol::get( const KUrl & url )
     // Size of a QIODevice read. It must be large enough so that the mime type check will not fail
     const qint64 maxSize = 0x100000; // 1MB
 
-    qint64 bufferSize = qMin( maxSize, archiveFileEntry->size() );
+    qint64 bufferSize = std::min( maxSize, archiveFileEntry->size() );
     QByteArray buffer;
     buffer.resize( bufferSize );
     if ( buffer.isEmpty() && bufferSize > 0 )
@@ -496,7 +496,7 @@ void ArchiveProtocol::get( const KUrl & url )
     {
         if ( !firstRead )
         {
-            bufferSize = qMin( maxSize, fileSize );
+            bufferSize = std::min( maxSize, fileSize );
             buffer.resize( bufferSize );
         }
         const qint64 read = io->read( buffer.data(), buffer.size() ); // Avoid to use bufferSize here, in case something went wrong.

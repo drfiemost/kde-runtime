@@ -32,7 +32,7 @@ void Repository::add(const QByteArray &key, Data_entry &data)
         data.timeout = (unsigned) -1;
     else
         data.timeout += time(0L);
-    head_time = qMin(head_time, data.timeout);
+    head_time = std::min(head_time, data.timeout);
     repo.insert(key, data);
 }
 
@@ -175,7 +175,7 @@ int Repository::expire()
 	if (t <= current)
 	    keys.push(it.key());
 	else
-	    head_time = qMin(head_time, t);
+	    head_time = std::min(head_time, t);
     }
 
     int n = keys.count();

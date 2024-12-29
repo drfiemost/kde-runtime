@@ -371,7 +371,7 @@ void IconThemesConfig::updateRemoveButton()
 
 void loadPreview(QLabel *label, KIconTheme& icontheme, const QStringList& iconnames)
 {
-    const int size = qMin(48, icontheme.defaultSize(KIconLoader::Desktop));
+    const int size = std::min(48, icontheme.defaultSize(KIconLoader::Desktop));
     QSvgRenderer renderer;
     foreach(const QString &iconthemename, QStringList() << icontheme.internalName() << icontheme.inherits()) {
       foreach(const QString &name, iconnames) {

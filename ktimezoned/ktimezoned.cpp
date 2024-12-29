@@ -415,7 +415,7 @@ void KTimeZoned::findLocalZone()
         for (KTimeZones::ZoneMap::ConstIterator it = zmap.constBegin(), end = zmap.constEnd();  it != end;  ++it)
         {
             KTimeZone zone = it.value();
-            int candidateOffset = qAbs(zone.currentOffset(Qt::LocalTime));
+            int candidateOffset = std::abs(zone.currentOffset(Qt::LocalTime));
             if (candidateOffset < bestOffset
             &&  zone.parse())
             {
