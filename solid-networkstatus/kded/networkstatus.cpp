@@ -42,7 +42,6 @@
 #include "wicdstatus.h"
 
 #include <kpluginfactory.h>
-#include "ntracknetworkstate.h"
 
 K_PLUGIN_FACTORY(NetworkStatusFactory,
                  registerPlugin<NetworkStatusModule>();
