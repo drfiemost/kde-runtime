@@ -257,7 +257,11 @@ bool JpegCreator::create(const QString &path, int width, int height, QImage &ima
     if (settings->rotate()) {
         //Handle exif rotation
         try {
+#if EXIV2_TEST_VERSION(0,28,0)
+            Exiv2::Image::UniquePtr exivImg = Exiv2::ImageFactory::open(name.constData());
+#else
             Exiv2::Image::AutoPtr exivImg = Exiv2::ImageFactory::open(name.constData());
+#endif
             if (exivImg.get()) {
                 exivImg->readMetadata();
                 Exiv2::ExifData exifData = exivImg->exifData();
@@ -265,7 +269,11 @@ bool JpegCreator::create(const QString &path, int width, int height, QImage &ima
                     Exiv2::ExifKey key("Exif.Image.Orientation");
                     Exiv2::ExifData::iterator it = exifData.findKey(key);
                     if (it != exifData.end()) {
+#if EXIV2_TEST_VERSION(0,28,0)
+                        int orient = it->toInt64();
+#else
                         int orient = it->toLong();
+#endif
                         image = img.transformed(orientationMatrix(orient));
                         return true;
                     }
