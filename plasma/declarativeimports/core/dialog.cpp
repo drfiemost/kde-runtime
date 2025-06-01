@@ -207,8 +207,8 @@ void DialogProxy::setVisible(const bool visible)
 
         const QRect workArea(KWindowSystem::workArea());
         if (!workArea.contains(m_dialog->geometry())) {
-            m_dialog->move(qBound(workArea.left(), m_dialog->x(), workArea.right() - m_dialog->width()),
-                             qBound(workArea.top(), m_dialog->y(), workArea.bottom() - m_dialog->height())
+            m_dialog->move(std::clamp(m_dialog->x(), workArea.left(), workArea.right() - m_dialog->width()),
+                             std::clamp(m_dialog->y(), workArea.top(), workArea.bottom() - m_dialog->height())
             );
         }
 

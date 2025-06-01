@@ -105,7 +105,7 @@ qreal QRangeModelPrivate::publicPosition(qreal position) const
     const qreal positionStep = stepSize * positionValueRatio;
 
     if (positionStep == 0)
-        return (min < max) ? qBound(min, position, max) : qBound(max, position, min);
+        return (min < max) ? std::clamp(position, min, max) : std::clamp(position, max, min);
 
     const int stepSizeMultiplier = (position - min) / positionStep;
 
@@ -144,7 +144,7 @@ qreal QRangeModelPrivate::publicValue(qreal value) const
     // outside the range, might become valid later if the range changes.
 
     if (stepSize == 0)
-        return qBound(minimum, value, maximum);
+        return std::clamp(value, minimum, maximum);
 
     const int stepSizeMultiplier = (value - minimum) / stepSize;
 

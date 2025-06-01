@@ -176,7 +176,7 @@ void WebPHandler::setOption(ImageOption option, const QVariant &value)
 {
     if (option == Quality) {
         if ( value.toInt() >= 0 )
-            quality = qBound(0, value.toInt(), 100);
+            quality = std::clamp(value.toInt(), 0, 100);
     }
 }
 
