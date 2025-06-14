@@ -127,8 +127,7 @@ void GraphicsGridLayoutObject::addLayoutItem(QGraphicsLayoutItem *item)
 
         addItem(item, row, column, rowSpan, columnSpan);
 
-        if (alignment != -1)
-            setAlignment(item, alignment);
+        setAlignment(item, alignment);
         QObject::connect(obj, SIGNAL(alignmentChanged(QGraphicsLayoutItem*, Qt::Alignment)),
                          this, SLOT(updateAlignment(QGraphicsLayoutItem*, Qt::Alignment)));
     }
