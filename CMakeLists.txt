@@ -18,12 +18,6 @@ include(CTestConfig.cmake)
 include(CheckIncludeFiles)
 include(CheckFunctionExists)
 
-if(WINCE)
-    #Needs to be set because otherwise he wouldn't find kde parts
-    set(KDE4_DATA_DIR "${CMAKE_PREFIX_PATH}/share/apps")
-    add_definitions(-DKDELIBS_STATIC_LIBS)
-endif(WINCE)
-
 #search packages used by KDE
 find_package(KDE4 4.9.95 REQUIRED)
 include(KDE4Defaults)
@@ -33,12 +27,6 @@ set_package_properties(KDeclarative PROPERTIES DESCRIPTION "KDE Declarative (QML
                        URL "http://www.kde.org"
                        TYPE REQUIRED
                        PURPOSE "Required by corebindingsplugin (org.kde.plasma.core)"
-                      )
-
-macro_optional_find_package(QCA2 2.0.0)
-set_package_properties(QCA2 PROPERTIES DESCRIPTION "Support for remote plasma widgets"
-                       URL "http://delta.affinix.com/qca"
-                       TYPE OPTIONAL
                       )
 
 find_package(LibGcrypt 1.5.0 REQUIRED QUIET)
@@ -55,6 +43,7 @@ configure_file (config-runtime.h.cmake ${CMAKE_CURRENT_BINARY_DIR}/config-runtim
 
 add_definitions (${QT_DEFINITIONS} ${KDE4_DEFINITIONS})
 add_definitions(-DQT_USE_FAST_CONCATENATION -DQT_USE_FAST_OPERATOR_PLUS)
+add_definitions(-DKDE_NO_DEPRECATED)
 
 include_directories (${CMAKE_SOURCE_DIR} ${CMAKE_CURRENT_BINARY_DIR} ${KDE4_INCLUDES})
 
@@ -68,9 +57,7 @@ macro_optional_add_subdirectory(kglobalaccel)
 add_subdirectory(knotify)
 add_subdirectory(ktimezoned)
 
-if(NOT WINCE)
 macro_optional_add_subdirectory(kuiserver)
-endif(NOT WINCE)
 add_subdirectory(kwalletd)
 
 if ( UNIX )
@@ -81,9 +68,7 @@ if ( UNIX )
 endif ( UNIX )
 
 # Plugins/components required for basic utility
-if ( NOT WINCE )
-    add_subdirectory(kcontrol)
-endif ( NOT WINCE )
+add_subdirectory(kcontrol)
 add_subdirectory(kioslave)
 add_subdirectory(kurifilter-plugins)
 add_subdirectory(phonon)
@@ -116,9 +101,7 @@ if (Q_WS_X11)
 endif (Q_WS_X11)
 add_subdirectory(kquitapp)
 add_subdirectory(menu)
-if ( NOT WINCE )
-    add_subdirectory(plasma)
-endif ( NOT WINCE )
+add_subdirectory(plasma)
 add_subdirectory(solid-hardware)
 
 # Platform-specific integration
@@ -127,16 +110,12 @@ add_subdirectory(platforms)
 # Default settings, content and config
 add_subdirectory(l10n)
 add_subdirectory(localization)
-if(NOT WINCE)
-  add_subdirectory(kde-menu)
+add_subdirectory(kde-menu)
 macro_optional_add_subdirectory(doc)
-endif(NOT WINCE)
 
 # Artwork
 add_subdirectory(desktoptheme)
-if ( NOT WINCE )
-  add_subdirectory(pics)
-endif ( NOT WINCE )
+add_subdirectory(pics)
 
 feature_summary(WHAT ALL INCLUDE_QUIET_PACKAGES FATAL_ON_MISSING_REQUIRED_PACKAGES)
 
