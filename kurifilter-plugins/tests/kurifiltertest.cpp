@@ -371,14 +371,13 @@ void KUriFilterTest::environmentVariables()
 
 void KUriFilterTest::internetKeywords()
 {
-    QString sc;
-    filter( sc.sprintf("gg%cfoo bar",s_delimiter).toUtf8(), "https://www.google.com/search?q=foo+bar&ie=UTF-8", KUriFilterData::NetProtocol );
-    filter( sc.sprintf("bug%c55798", s_delimiter).toUtf8(), "https://bugs.kde.org/show_bug.cgi?id=55798", KUriFilterData::NetProtocol );
+    filter( QString::asprintf("gg%cfoo bar",s_delimiter).toUtf8(), "https://www.google.com/search?q=foo+bar&ie=UTF-8", KUriFilterData::NetProtocol );
+    filter( QString::asprintf("bug%c55798", s_delimiter).toUtf8(), "https://bugs.kde.org/show_bug.cgi?id=55798", KUriFilterData::NetProtocol );
 
-    filter( sc.sprintf("gg%cC++", s_delimiter).toUtf8(), "https://www.google.com/search?q=C%2B%2B&ie=UTF-8", KUriFilterData::NetProtocol );
-    filter( sc.sprintf("gg%cC#", s_delimiter).toUtf8(), "https://www.google.com/search?q=C%23&ie=UTF-8", KUriFilterData::NetProtocol );
-    filter( sc.sprintf("ya%cfoo bar was here", s_delimiter).toUtf8(), 0, -1 ); // this triggers default search, i.e. google
-    filter( sc.sprintf("gg%cwww.kde.org", s_delimiter).toUtf8(), "https://www.google.com/search?q=www.kde.org&ie=UTF-8", KUriFilterData::NetProtocol );
+    filter( QString::asprintf("gg%cC++", s_delimiter).toUtf8(), "https://www.google.com/search?q=C%2B%2B&ie=UTF-8", KUriFilterData::NetProtocol );
+    filter( QString::asprintf("gg%cC#", s_delimiter).toUtf8(), "https://www.google.com/search?q=C%23&ie=UTF-8", KUriFilterData::NetProtocol );
+    filter( QString::asprintf("ya%cfoo bar was here", s_delimiter).toUtf8(), 0, -1 ); // this triggers default search, i.e. google
+    filter( QString::asprintf("gg%cwww.kde.org", s_delimiter).toUtf8(), "https://www.google.com/search?q=www.kde.org&ie=UTF-8", KUriFilterData::NetProtocol );
     filter( QString::fromUtf8("gg%1é").arg(s_delimiter).toUtf8() /*eaccent in utf8*/, "https://www.google.com/search?q=%C3%A9&ie=UTF-8", KUriFilterData::NetProtocol );
     filter( QString::fromUtf8("gg%1прйвет").arg(s_delimiter).toUtf8() /* greetings in russian utf-8*/, "https://www.google.com/search?q=%D0%BF%D1%80%D0%B9%D0%B2%D0%B5%D1%82&ie=UTF-8", KUriFilterData::NetProtocol );
 }
