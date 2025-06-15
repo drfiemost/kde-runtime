@@ -605,10 +605,10 @@ int GpgPersistHandler::read(Backend* wb, QFile& sf, WId w)
     encryptedData.seek(0, SEEK_SET);
     GpgME::DecryptionResult res = ctx->decrypt(encryptedData, decryptedData);
     if (res.error()){
-        kDebug() << "Error decrypting message: " << res.error().asString() << ", code " << res.error().code() << ", source " << res.error().source();
+        kDebug() << "Error decrypting message: " << res.error().asStdString().c_str() << ", code " << res.error().code() << ", source " << res.error().source();
         KGuiItem btnRetry(i18n("Retry"));
         // FIXME the logic here should be a little more elaborate; a dialog box should be used with "retry", "cancel", but also "troubleshoot" with options to show card status and to kill scdaemon
-        int userChoice = KMessageBox::warningYesNoWId(w, i18n("<qt>Error when attempting to decrypt the wallet <b>%1</b> using GPG. If you're using a SmartCard, please ensure it's inserted then try again.<br><br>GPG error was <b>%2</b></qt>", wb->_name.toHtmlEscaped(), res.error().asString()),
+        int userChoice = KMessageBox::warningYesNoWId(w, i18n("<qt>Error when attempting to decrypt the wallet <b>%1</b> using GPG. If you're using a SmartCard, please ensure it's inserted then try again.<br><br>GPG error was <b>%2</b></qt>", wb->_name.toHtmlEscaped(), res.error().asStdString().c_str()),
             i18n("kwalletd GPG backend"), btnRetry, KStandardGuiItem::cancel());
         if (userChoice == KMessageBox::Yes) {
             decryptedData.seek(0, SEEK_SET);
