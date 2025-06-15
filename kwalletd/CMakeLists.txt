@@ -1,25 +1,13 @@
 project(kwalletd)
 
 ########### find needed packages ######
-find_package(Gpgme)  # Called by FindQGpgme, but since we call some gpgme
-                     # functions ourselves we need to link against it directly.
-find_package(QGpgme) # provided by kdepimlibs
-
-if (NOT QGPGME_FOUND)
 find_package(Gpgmepp) # provided by gpgme 1.7
-endif (NOT QGPGME_FOUND)
 
-if ((GPGME_FOUND AND QGPGME_FOUND) OR Gpgmepp_FOUND)
-    add_definitions(-DHAVE_QGPGME)
+if (Gpgmepp_FOUND)
+    add_definitions(-DHAVE_GPGMEPP)
     include_directories(${GPGME_INCLUDES})
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${KDE4_ENABLE_EXCEPTIONS}")
-endif((GPGME_FOUND AND QGPGME_FOUND) OR Gpgmepp_FOUND)
-if (GPGME_FOUND AND QGPGME_FOUND)
-    include_directories(${QGPGME_INCLUDE_DIR})
-endif (GPGME_FOUND AND QGPGME_FOUND)
-if (Gpgmepp_FOUND)
-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++0x")
-endif (Gpgmepp_FOUND)
+endif()
 
 ########### build backends #########
 add_subdirectory(backend)

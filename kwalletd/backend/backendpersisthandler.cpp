@@ -25,7 +25,7 @@
 #include <kdebug.h>
 #include <kmessagebox.h>
 #include <klocalizedstring.h>
-#ifdef HAVE_QGPGME
+#ifdef HAVE_GPGMEPP
 #include <gpgme.h>
 #include <gpgme++/context.h>
 #include <gpgme++/key.h>
@@ -146,10 +146,10 @@ BackendPersistHandler *BackendPersistHandler::getPersistHandler(BackendCipherTyp
     switch (cipherType){
         case BACKEND_CIPHER_BLOWFISH:
             return new BlowfishPersistHandler;
-#ifdef HAVE_QGPGME
+#ifdef HAVE_GPGMEPP
         case BACKEND_CIPHER_GPG:
             return new GpgPersistHandler;
-#endif // HAVE_QGPGME
+#endif // HAVE_GPGMEPP
         default:
             Q_ASSERT(0);
             return 0;
@@ -166,12 +166,12 @@ BackendPersistHandler *BackendPersistHandler::getPersistHandler(char magicBuf[12
         }
         return new BlowfishPersistHandler(useECBforReading);
     }
-#ifdef HAVE_QGPGME
+#ifdef HAVE_GPGMEPP
     if (magicBuf[2] == KWALLET_CIPHER_GPG &&
         magicBuf[3] == 0) {
         return new GpgPersistHandler;
     }
-#endif // HAVE_QGPGME
+#endif // HAVE_GPGMEPP
     return 0;    // unknown cipher or hash
 }
 
@@ -466,7 +466,7 @@ int BlowfishPersistHandler::read(Backend* wb, QFile& db, WId)
     return 0;
 }
 
-#ifdef HAVE_QGPGME
+#ifdef HAVE_GPGMEPP
 GpgME::Error initGpgME()
 {
     GpgME::Error err;
@@ -727,6 +727,6 @@ int GpgPersistHandler::read(Backend* wb, QFile& sf, WId w)
 
     return 0;
 }
-#endif // HAVE_QGPGME
+#endif // HAVE_GPGMEPP
 
 } // namespace

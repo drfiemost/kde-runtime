@@ -28,7 +28,7 @@
 #include <kcodecs.h>
 #include <ksavefile.h>
 #include <kstandarddirs.h>
-#ifdef HAVE_QGPGME
+#ifdef HAVE_GPGMEPP
 #include <gpgme++/key.h>
 #endif
 #include <gcrypt.h>
@@ -271,7 +271,7 @@ int Backend::open(const QByteArray& password, WId w) {
    return openInternal(w);
 }
 
-#ifdef HAVE_QGPGME
+#ifdef HAVE_GPGMEPP
 int Backend::open(const GpgME::Key& key)
 {
     if (_open) {
@@ -280,7 +280,7 @@ int Backend::open(const GpgME::Key& key)
     _gpgKey = key;
     return openInternal();
 }
-#endif // HAVE_QGPGME
+#endif // HAVE_GPGMEPP
 
 int Backend::openPreHashed(const QByteArray &passwordHash)
 {
@@ -681,7 +681,7 @@ void Backend::setPassword(const QByteArray &password) {
     }
 }
 
-#ifdef HAVE_QGPGME
+#ifdef HAVE_GPGMEPP
 const GpgME::Key &Backend::gpgKey() const {
     return _gpgKey;
 }
