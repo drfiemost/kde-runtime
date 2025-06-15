@@ -22,9 +22,7 @@
 #define __kcmhtmlsearch_h__
 
 
-#define KDE3_SUPPORT
 #include <kcmodule.h>
-#undef KDE3_SUPPORT
 #include <QVariantList>
 
 
