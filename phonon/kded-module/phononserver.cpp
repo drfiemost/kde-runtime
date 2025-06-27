@@ -40,7 +40,6 @@
 #include <QtDBus/QDBusMessage>
 #include <QtDBus/QDBusMetaType>
 #include <QtCore/QVariant>
-#include <phonon/pulsesupport.h>
 #include <Solid/AudioInterface>
 #include <Solid/GenericInterface>
 #include <Solid/Device>
@@ -384,18 +383,6 @@ static void removeOssOnlyDevices(QList<PS::DeviceInfo> *list)
 
 void PhononServer::findDevices()
 {
-    if (Phonon::PulseSupport *pulse = Phonon::PulseSupport::getInstance()) {
-        // NOTE: This is relying on internal behavior....
-        //       enable internally simply sets a bool that is later && with the
-        //       actually PA activity.
-        //       Should this function ever start doing more, this will break horribly.
-        pulse->enable();
-        if (pulse->isActive()) {
-            kDebug(601) << "Not looking for devices as Phonon::PulseSupport is active.";
-            return;
-        }
-    }
-
     // Fetch the full list of audio and video devices from Solid
     const QList<Solid::Device> &solidAudioDevices =
         Solid::Device::listFromQuery("AudioInterface.deviceType & 'AudioInput|AudioOutput'");
