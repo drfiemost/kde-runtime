@@ -645,7 +645,7 @@ void DevicePreference::on_preferButton_clicked()
 {
     QAbstractItemModel *model = deviceList->model();
     {
-        AudioOutputDeviceModel *deviceModel = qobject_cast<AudioOutputDeviceModel *>(model);
+        AudioOutputDeviceModel *deviceModel = dynamic_cast<AudioOutputDeviceModel *>(model);
         if (deviceModel) {
             deviceModel->moveUp(deviceList->currentIndex());
             updateButtonsEnabled();
@@ -653,7 +653,7 @@ void DevicePreference::on_preferButton_clicked()
         }
     }
     {
-        AudioCaptureDeviceModel *deviceModel = qobject_cast<AudioCaptureDeviceModel *>(model);
+        AudioCaptureDeviceModel *deviceModel = dynamic_cast<AudioCaptureDeviceModel *>(model);
         if (deviceModel) {
             deviceModel->moveUp(deviceList->currentIndex());
             updateButtonsEnabled();
@@ -661,7 +661,7 @@ void DevicePreference::on_preferButton_clicked()
         }
     }
     {
-        VideoCaptureDeviceModel *deviceModel = qobject_cast<VideoCaptureDeviceModel *>(model);
+        VideoCaptureDeviceModel *deviceModel = dynamic_cast<VideoCaptureDeviceModel *>(model);
         if (deviceModel) {
             deviceModel->moveUp(deviceList->currentIndex());
             updateButtonsEnabled();
@@ -674,7 +674,7 @@ void DevicePreference::on_deferButton_clicked()
 {
     QAbstractItemModel *model = deviceList->model();
     {
-        AudioOutputDeviceModel *deviceModel = qobject_cast<AudioOutputDeviceModel *>(model);
+        AudioOutputDeviceModel *deviceModel = dynamic_cast<AudioOutputDeviceModel *>(model);
         if (deviceModel) {
             deviceModel->moveDown(deviceList->currentIndex());
             updateButtonsEnabled();
@@ -682,7 +682,7 @@ void DevicePreference::on_deferButton_clicked()
         }
     }
     {
-        AudioCaptureDeviceModel *deviceModel = qobject_cast<AudioCaptureDeviceModel *>(model);
+        AudioCaptureDeviceModel *deviceModel = dynamic_cast<AudioCaptureDeviceModel *>(model);
         if (deviceModel) {
             deviceModel->moveDown(deviceList->currentIndex());
             updateButtonsEnabled();
@@ -690,7 +690,7 @@ void DevicePreference::on_deferButton_clicked()
         }
     }
     {
-        VideoCaptureDeviceModel *deviceModel = qobject_cast<VideoCaptureDeviceModel *>(model);
+        VideoCaptureDeviceModel *deviceModel = dynamic_cast<VideoCaptureDeviceModel *>(model);
         if (deviceModel) {
             deviceModel->moveDown(deviceList->currentIndex());
             updateButtonsEnabled();
